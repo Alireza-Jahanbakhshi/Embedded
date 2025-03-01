@@ -1,4 +1,4 @@
-# AVR & Embedded MCU Firmware Repository
+# Embedded MCU Firmware Repository
 
 ## Overview
 
