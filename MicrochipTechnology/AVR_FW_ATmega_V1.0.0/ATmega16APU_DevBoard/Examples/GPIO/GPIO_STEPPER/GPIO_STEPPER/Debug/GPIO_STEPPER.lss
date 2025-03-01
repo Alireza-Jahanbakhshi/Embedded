@@ -1,0 +1,278 @@
+
+GPIO_STEPPER.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00000176  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000004  00800060  00000176  000001ea  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .comment      00000030  00000000  00000000  000001ee  2**0
+                  CONTENTS, READONLY
+  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00000220  2**2
+                  CONTENTS, READONLY
+  4 .debug_aranges 00000038  00000000  00000000  0000025c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   00000848  00000000  00000000  00000294  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 000006a7  00000000  00000000  00000adc  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   000002de  00000000  00000000  00001183  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  0000007c  00000000  00000000  00001464  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    000003ee  00000000  00000000  000014e0  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    00000218  00000000  00000000  000018ce  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 00000040  00000000  00000000  00001ae6  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 2a 00 	jmp	0x54	; 0x54 <__ctors_end>
+   4:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+   8:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+   c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  10:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  14:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  18:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  1c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  20:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  24:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  28:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  2c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  30:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  34:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  38:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  3c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  40:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  44:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  48:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  4c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  50:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+
+00000054 <__ctors_end>:
+  54:	11 24       	eor	r1, r1
+  56:	1f be       	out	0x3f, r1	; 63
+  58:	cf e5       	ldi	r28, 0x5F	; 95
+  5a:	d4 e0       	ldi	r29, 0x04	; 4
+  5c:	de bf       	out	0x3e, r29	; 62
+  5e:	cd bf       	out	0x3d, r28	; 61
+
+00000060 <__do_copy_data>:
+  60:	10 e0       	ldi	r17, 0x00	; 0
+  62:	a0 e6       	ldi	r26, 0x60	; 96
+  64:	b0 e0       	ldi	r27, 0x00	; 0
+  66:	e6 e7       	ldi	r30, 0x76	; 118
+  68:	f1 e0       	ldi	r31, 0x01	; 1
+  6a:	02 c0       	rjmp	.+4      	; 0x70 <__do_copy_data+0x10>
+  6c:	05 90       	lpm	r0, Z+
+  6e:	0d 92       	st	X+, r0
+  70:	a4 36       	cpi	r26, 0x64	; 100
+  72:	b1 07       	cpc	r27, r17
+  74:	d9 f7       	brne	.-10     	; 0x6c <__do_copy_data+0xc>
+  76:	0e 94 96 00 	call	0x12c	; 0x12c <main>
+  7a:	0c 94 b9 00 	jmp	0x172	; 0x172 <_exit>
+
+0000007e <__bad_interrupt>:
+  7e:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+00000082 <delay_variable_ms>:
+    STEP_PORT = step_sequence[step]; // Output step pattern
+}
+
+// Variable delay function
+void delay_variable_ms(int delay_ms) {
+    while (delay_ms--) {
+  82:	9c 01       	movw	r18, r24
+  84:	21 50       	subi	r18, 0x01	; 1
+  86:	31 09       	sbc	r19, r1
+  88:	89 2b       	or	r24, r25
+  8a:	41 f0       	breq	.+16     	; 0x9c <delay_variable_ms+0x1a>
+    milliseconds can be achieved.
+ */
+void
+_delay_loop_2(uint16_t __count)
+{
+	__asm__ volatile (
+  8c:	40 ed       	ldi	r20, 0xD0	; 208
+  8e:	57 e0       	ldi	r21, 0x07	; 7
+  90:	ca 01       	movw	r24, r20
+  92:	01 97       	sbiw	r24, 0x01	; 1
+  94:	f1 f7       	brne	.-4      	; 0x92 <delay_variable_ms+0x10>
+  96:	21 50       	subi	r18, 0x01	; 1
+  98:	31 09       	sbc	r19, r1
+  9a:	d0 f7       	brcc	.-12     	; 0x90 <delay_variable_ms+0xe>
+  9c:	08 95       	ret
+
+0000009e <stepper_rotate>:
+        _delay_loop_2(2000); // Approximate 1ms delay for 8MHz clock
+    }
+}
+
+void stepper_rotate(int steps, int delay_ms, uint8_t direction) {
+  9e:	cf 92       	push	r12
+  a0:	df 92       	push	r13
+  a2:	ef 92       	push	r14
+  a4:	ff 92       	push	r15
+  a6:	0f 93       	push	r16
+  a8:	1f 93       	push	r17
+  aa:	cf 93       	push	r28
+  ac:	df 93       	push	r29
+    for (int i = 0; i < steps; i++) {
+  ae:	18 16       	cp	r1, r24
+  b0:	19 06       	cpc	r1, r25
+  b2:	9c f5       	brge	.+102    	; 0x11a <stepper_rotate+0x7c>
+  b4:	d4 2e       	mov	r13, r20
+  b6:	7b 01       	movw	r14, r22
+  b8:	8c 01       	movw	r16, r24
+  ba:	c0 e0       	ldi	r28, 0x00	; 0
+  bc:	d0 e0       	ldi	r29, 0x00	; 0
+
+// Define stepper motor sequence for full-step drive
+const uint8_t step_sequence[4] = {0b00001000, 0b00000100, 0b00000010, 0b00000001};
+
+void stepper_step(uint8_t step) {
+    STEP_PORT = step_sequence[step]; // Output step pattern
+  be:	0f 2e       	mov	r0, r31
+  c0:	f3 e0       	ldi	r31, 0x03	; 3
+  c2:	cf 2e       	mov	r12, r31
+  c4:	f0 2d       	mov	r31, r0
+    }
+}
+
+void stepper_rotate(int steps, int delay_ms, uint8_t direction) {
+    for (int i = 0; i < steps; i++) {
+        if (direction == 1) {
+  c6:	81 e0       	ldi	r24, 0x01	; 1
+  c8:	d8 12       	cpse	r13, r24
+  ca:	10 c0       	rjmp	.+32     	; 0xec <stepper_rotate+0x4e>
+
+// Define stepper motor sequence for full-step drive
+const uint8_t step_sequence[4] = {0b00001000, 0b00000100, 0b00000010, 0b00000001};
+
+void stepper_step(uint8_t step) {
+    STEP_PORT = step_sequence[step]; // Output step pattern
+  cc:	ce 01       	movw	r24, r28
+  ce:	83 70       	andi	r24, 0x03	; 3
+  d0:	90 78       	andi	r25, 0x80	; 128
+  d2:	99 23       	and	r25, r25
+  d4:	24 f4       	brge	.+8      	; 0xde <stepper_rotate+0x40>
+  d6:	01 97       	sbiw	r24, 0x01	; 1
+  d8:	8c 6f       	ori	r24, 0xFC	; 252
+  da:	9f 6f       	ori	r25, 0xFF	; 255
+  dc:	01 96       	adiw	r24, 0x01	; 1
+  de:	99 27       	eor	r25, r25
+  e0:	fc 01       	movw	r30, r24
+  e2:	e0 5a       	subi	r30, 0xA0	; 160
+  e4:	ff 4f       	sbci	r31, 0xFF	; 255
+  e6:	80 81       	ld	r24, Z
+  e8:	85 bb       	out	0x15, r24	; 21
+  ea:	10 c0       	rjmp	.+32     	; 0x10c <stepper_rotate+0x6e>
+  ec:	ce 01       	movw	r24, r28
+  ee:	83 70       	andi	r24, 0x03	; 3
+  f0:	90 78       	andi	r25, 0x80	; 128
+  f2:	99 23       	and	r25, r25
+  f4:	24 f4       	brge	.+8      	; 0xfe <stepper_rotate+0x60>
+  f6:	01 97       	sbiw	r24, 0x01	; 1
+  f8:	8c 6f       	ori	r24, 0xFC	; 252
+  fa:	9f 6f       	ori	r25, 0xFF	; 255
+  fc:	01 96       	adiw	r24, 0x01	; 1
+  fe:	ec 2d       	mov	r30, r12
+ 100:	e8 1b       	sub	r30, r24
+ 102:	f0 e0       	ldi	r31, 0x00	; 0
+ 104:	e0 5a       	subi	r30, 0xA0	; 160
+ 106:	ff 4f       	sbci	r31, 0xFF	; 255
+ 108:	80 81       	ld	r24, Z
+ 10a:	85 bb       	out	0x15, r24	; 21
+            stepper_step(i % 4); // Clockwise
+        } else {
+            stepper_step((3 - (i % 4))); // Counterclockwise
+        }
+
+        delay_variable_ms(delay_ms); // Use loop-based delay
+ 10c:	c7 01       	movw	r24, r14
+ 10e:	0e 94 41 00 	call	0x82	; 0x82 <delay_variable_ms>
+        _delay_loop_2(2000); // Approximate 1ms delay for 8MHz clock
+    }
+}
+
+void stepper_rotate(int steps, int delay_ms, uint8_t direction) {
+    for (int i = 0; i < steps; i++) {
+ 112:	21 96       	adiw	r28, 0x01	; 1
+ 114:	0c 17       	cp	r16, r28
+ 116:	1d 07       	cpc	r17, r29
+ 118:	b1 f6       	brne	.-84     	; 0xc6 <stepper_rotate+0x28>
+            stepper_step((3 - (i % 4))); // Counterclockwise
+        }
+
+        delay_variable_ms(delay_ms); // Use loop-based delay
+    }
+}
+ 11a:	df 91       	pop	r29
+ 11c:	cf 91       	pop	r28
+ 11e:	1f 91       	pop	r17
+ 120:	0f 91       	pop	r16
+ 122:	ff 90       	pop	r15
+ 124:	ef 90       	pop	r14
+ 126:	df 90       	pop	r13
+ 128:	cf 90       	pop	r12
+ 12a:	08 95       	ret
+
+0000012c <main>:
+
+int main(void) {
+    STEP_DDR = 0x0F; // Set lower 4 bits of PORTC as output
+ 12c:	8f e0       	ldi	r24, 0x0F	; 15
+ 12e:	84 bb       	out	0x14, r24	; 20
+
+    while (1) {
+        stepper_rotate(200, 10, 1); // Rotate clockwise
+ 130:	41 e0       	ldi	r20, 0x01	; 1
+ 132:	6a e0       	ldi	r22, 0x0A	; 10
+ 134:	70 e0       	ldi	r23, 0x00	; 0
+ 136:	88 ec       	ldi	r24, 0xC8	; 200
+ 138:	90 e0       	ldi	r25, 0x00	; 0
+ 13a:	0e 94 4f 00 	call	0x9e	; 0x9e <stepper_rotate>
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 13e:	2f ef       	ldi	r18, 0xFF	; 255
+ 140:	89 e6       	ldi	r24, 0x69	; 105
+ 142:	98 e1       	ldi	r25, 0x18	; 24
+ 144:	21 50       	subi	r18, 0x01	; 1
+ 146:	80 40       	sbci	r24, 0x00	; 0
+ 148:	90 40       	sbci	r25, 0x00	; 0
+ 14a:	e1 f7       	brne	.-8      	; 0x144 <main+0x18>
+ 14c:	00 c0       	rjmp	.+0      	; 0x14e <main+0x22>
+ 14e:	00 00       	nop
+        _delay_ms(1000);  // Pause
+
+        stepper_rotate(200, 10, 0); // Rotate counterclockwise
+ 150:	40 e0       	ldi	r20, 0x00	; 0
+ 152:	6a e0       	ldi	r22, 0x0A	; 10
+ 154:	70 e0       	ldi	r23, 0x00	; 0
+ 156:	88 ec       	ldi	r24, 0xC8	; 200
+ 158:	90 e0       	ldi	r25, 0x00	; 0
+ 15a:	0e 94 4f 00 	call	0x9e	; 0x9e <stepper_rotate>
+ 15e:	2f ef       	ldi	r18, 0xFF	; 255
+ 160:	89 e6       	ldi	r24, 0x69	; 105
+ 162:	98 e1       	ldi	r25, 0x18	; 24
+ 164:	21 50       	subi	r18, 0x01	; 1
+ 166:	80 40       	sbci	r24, 0x00	; 0
+ 168:	90 40       	sbci	r25, 0x00	; 0
+ 16a:	e1 f7       	brne	.-8      	; 0x164 <main+0x38>
+ 16c:	00 c0       	rjmp	.+0      	; 0x16e <main+0x42>
+ 16e:	00 00       	nop
+ 170:	df cf       	rjmp	.-66     	; 0x130 <main+0x4>
+
+00000172 <_exit>:
+ 172:	f8 94       	cli
+
+00000174 <__stop_program>:
+ 174:	ff cf       	rjmp	.-2      	; 0x174 <__stop_program>

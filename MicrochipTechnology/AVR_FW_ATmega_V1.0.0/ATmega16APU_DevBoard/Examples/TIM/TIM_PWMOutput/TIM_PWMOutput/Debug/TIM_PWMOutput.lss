@@ -1,0 +1,159 @@
+
+TIM_PWMOutput.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000000ba  00000000  00000000  00000054  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000000  00800060  00800060  0000010e  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .comment      00000030  00000000  00000000  0000010e  2**0
+                  CONTENTS, READONLY
+  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00000140  2**2
+                  CONTENTS, READONLY
+  4 .debug_aranges 00000028  00000000  00000000  0000017c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   000006d3  00000000  00000000  000001a4  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 000005ef  00000000  00000000  00000877  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   00000292  00000000  00000000  00000e66  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  00000034  00000000  00000000  000010f8  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    000003a9  00000000  00000000  0000112c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    000000b4  00000000  00000000  000014d5  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 00000018  00000000  00000000  00001589  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 2a 00 	jmp	0x54	; 0x54 <__ctors_end>
+   4:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+   8:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+   c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  10:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  14:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  18:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  1c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  20:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  24:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  28:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  2c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  30:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  34:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  38:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  3c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  40:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  44:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  48:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  4c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  50:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+
+00000054 <__ctors_end>:
+  54:	11 24       	eor	r1, r1
+  56:	1f be       	out	0x3f, r1	; 63
+  58:	cf e5       	ldi	r28, 0x5F	; 95
+  5a:	d4 e0       	ldi	r29, 0x04	; 4
+  5c:	de bf       	out	0x3e, r29	; 62
+  5e:	cd bf       	out	0x3d, r28	; 61
+  60:	0e 94 3e 00 	call	0x7c	; 0x7c <main>
+  64:	0c 94 5b 00 	jmp	0xb6	; 0xb6 <_exit>
+
+00000068 <__bad_interrupt>:
+  68:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+0000006c <Timer1_PWM_Init>:
+#define F_CPU 8000000UL
+#include <util/delay.h>
+
+void Timer1_PWM_Init(void)
+{
+	DDRD |= (1 << PD5);  // OC1A as output
+  6c:	8d 9a       	sbi	0x11, 5	; 17
+
+	// Fast PWM, 10-bit, non-inverting on OC1A
+	TCCR1A = (1 << WGM11) | (1 << WGM10) | (1 << COM1A1);
+  6e:	83 e8       	ldi	r24, 0x83	; 131
+  70:	8f bd       	out	0x2f, r24	; 47
+	TCCR1B = (1 << WGM12) | (1 << CS10);  // Prescaler 1
+  72:	89 e0       	ldi	r24, 0x09	; 9
+  74:	8e bd       	out	0x2e, r24	; 46
+	OCR1A = 0;  // Initial duty cycle
+  76:	1b bc       	out	0x2b, r1	; 43
+  78:	1a bc       	out	0x2a, r1	; 42
+  7a:	08 95       	ret
+
+0000007c <main>:
+}
+
+int main(void)
+{
+	Timer1_PWM_Init();
+  7c:	0e 94 36 00 	call	0x6c	; 0x6c <Timer1_PWM_Init>
+
+	while (1)
+	{
+		for (uint16_t duty = 0; duty < 1023; duty += 10)
+  80:	80 e0       	ldi	r24, 0x00	; 0
+  82:	90 e0       	ldi	r25, 0x00	; 0
+		{
+			OCR1A = duty;
+  84:	9b bd       	out	0x2b, r25	; 43
+  86:	8a bd       	out	0x2a, r24	; 42
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+  88:	ef e1       	ldi	r30, 0x1F	; 31
+  8a:	fe e4       	ldi	r31, 0x4E	; 78
+  8c:	31 97       	sbiw	r30, 0x01	; 1
+  8e:	f1 f7       	brne	.-4      	; 0x8c <main+0x10>
+  90:	00 c0       	rjmp	.+0      	; 0x92 <main+0x16>
+  92:	00 00       	nop
+{
+	Timer1_PWM_Init();
+
+	while (1)
+	{
+		for (uint16_t duty = 0; duty < 1023; duty += 10)
+  94:	0a 96       	adiw	r24, 0x0a	; 10
+  96:	86 30       	cpi	r24, 0x06	; 6
+  98:	f4 e0       	ldi	r31, 0x04	; 4
+  9a:	9f 07       	cpc	r25, r31
+  9c:	99 f7       	brne	.-26     	; 0x84 <main+0x8>
+  9e:	8f ef       	ldi	r24, 0xFF	; 255
+  a0:	93 e0       	ldi	r25, 0x03	; 3
+			OCR1A = duty;
+			_delay_ms(10);
+		}
+		for (uint16_t duty = 1023; duty > 0; duty -= 10)
+		{
+			OCR1A = duty;
+  a2:	9b bd       	out	0x2b, r25	; 43
+  a4:	8a bd       	out	0x2a, r24	; 42
+  a6:	ef e1       	ldi	r30, 0x1F	; 31
+  a8:	fe e4       	ldi	r31, 0x4E	; 78
+  aa:	31 97       	sbiw	r30, 0x01	; 1
+  ac:	f1 f7       	brne	.-4      	; 0xaa <main+0x2e>
+  ae:	00 c0       	rjmp	.+0      	; 0xb0 <main+0x34>
+  b0:	00 00       	nop
+		for (uint16_t duty = 0; duty < 1023; duty += 10)
+		{
+			OCR1A = duty;
+			_delay_ms(10);
+		}
+		for (uint16_t duty = 1023; duty > 0; duty -= 10)
+  b2:	0a 97       	sbiw	r24, 0x0a	; 10
+  b4:	f6 cf       	rjmp	.-20     	; 0xa2 <main+0x26>
+
+000000b6 <_exit>:
+  b6:	f8 94       	cli
+
+000000b8 <__stop_program>:
+  b8:	ff cf       	rjmp	.-2      	; 0xb8 <__stop_program>

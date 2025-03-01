@@ -1,0 +1,185 @@
+
+SPI_MCP41010.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000000de  00000000  00000000  00000054  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000000  00800060  00800060  00000132  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .comment      00000030  00000000  00000000  00000132  2**0
+                  CONTENTS, READONLY
+  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00000164  2**2
+                  CONTENTS, READONLY
+  4 .debug_aranges 00000038  00000000  00000000  000001a0  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   0000075a  00000000  00000000  000001d8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 00000663  00000000  00000000  00000932  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   000002da  00000000  00000000  00000f95  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  0000005c  00000000  00000000  00001270  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    000003a9  00000000  00000000  000012cc  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    000000fe  00000000  00000000  00001675  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 00000028  00000000  00000000  00001773  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 2a 00 	jmp	0x54	; 0x54 <__ctors_end>
+   4:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+   8:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+   c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  10:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  14:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  18:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  1c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  20:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  24:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  28:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  2c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  30:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  34:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  38:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  3c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  40:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  44:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  48:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  4c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  50:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+
+00000054 <__ctors_end>:
+  54:	11 24       	eor	r1, r1
+  56:	1f be       	out	0x3f, r1	; 63
+  58:	cf e5       	ldi	r28, 0x5F	; 95
+  5a:	d4 e0       	ldi	r29, 0x04	; 4
+  5c:	de bf       	out	0x3e, r29	; 62
+  5e:	cd bf       	out	0x3d, r28	; 61
+  60:	0e 94 4c 00 	call	0x98	; 0x98 <main>
+  64:	0c 94 6d 00 	jmp	0xda	; 0xda <_exit>
+
+00000068 <__bad_interrupt>:
+  68:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+0000006c <SPI_Init>:
+#define CS_PIN PB4  // Chip Select (SS)
+#define MOSI_PIN PB5 // Master Out Slave In
+#define SCK_PIN PB7  // Serial Clock
+
+void SPI_Init() {
+	DDRB |= (1 << MOSI_PIN) | (1 << SCK_PIN) | (1 << CS_PIN); // Set MOSI, SCK, CS as output
+  6c:	87 b3       	in	r24, 0x17	; 23
+  6e:	80 6b       	ori	r24, 0xB0	; 176
+  70:	87 bb       	out	0x17, r24	; 23
+	SPCR = (1 << SPE) | (1 << MSTR) | (1 << SPR0);  // Enable SPI, Master mode, f/16 (500 kHz SPI speed)
+  72:	81 e5       	ldi	r24, 0x51	; 81
+  74:	8d b9       	out	0x0d, r24	; 13
+  76:	08 95       	ret
+
+00000078 <SPI_Write>:
+}
+
+void SPI_Write(uint8_t data) {
+	SPDR = data;
+  78:	8f b9       	out	0x0f, r24	; 15
+	while (!(SPSR & (1 << SPIF))); // Wait for transmission to complete
+  7a:	77 9b       	sbis	0x0e, 7	; 14
+  7c:	fe cf       	rjmp	.-4      	; 0x7a <SPI_Write+0x2>
+}
+  7e:	08 95       	ret
+
+00000080 <MCP41010_SetWiper>:
+
+void MCP41010_SetWiper(uint8_t value) {
+  80:	cf 93       	push	r28
+  82:	c8 2f       	mov	r28, r24
+	PORTB &= ~(1 << CS_PIN); // Select chip (CS LOW)
+  84:	c4 98       	cbi	0x18, 4	; 24
+	SPI_Write(0b00010001);   // Command: Write data to potentiometer (0x11)
+  86:	81 e1       	ldi	r24, 0x11	; 17
+  88:	0e 94 3c 00 	call	0x78	; 0x78 <SPI_Write>
+	SPI_Write(value);        // Wiper value (0-255)
+  8c:	8c 2f       	mov	r24, r28
+  8e:	0e 94 3c 00 	call	0x78	; 0x78 <SPI_Write>
+	PORTB |= (1 << CS_PIN);  // Deselect chip (CS HIGH)
+  92:	c4 9a       	sbi	0x18, 4	; 24
+}
+  94:	cf 91       	pop	r28
+  96:	08 95       	ret
+
+00000098 <main>:
+
+int main() {
+	SPI_Init();
+  98:	0e 94 36 00 	call	0x6c	; 0x6c <SPI_Init>
+	
+	while (1) {
+
+		
+		// Slow reverse cycle (255 ? 0)
+		for (uint8_t i = 255; i > 0; i -= 5) {  // Slower decrease
+  9c:	cf ef       	ldi	r28, 0xFF	; 255
+			MCP41010_SetWiper(i);
+  9e:	8c 2f       	mov	r24, r28
+  a0:	0e 94 40 00 	call	0x80	; 0x80 <MCP41010_SetWiper>
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+  a4:	2f ef       	ldi	r18, 0xFF	; 255
+  a6:	81 ee       	ldi	r24, 0xE1	; 225
+  a8:	94 e0       	ldi	r25, 0x04	; 4
+  aa:	21 50       	subi	r18, 0x01	; 1
+  ac:	80 40       	sbci	r24, 0x00	; 0
+  ae:	90 40       	sbci	r25, 0x00	; 0
+  b0:	e1 f7       	brne	.-8      	; 0xaa <main+0x12>
+  b2:	00 c0       	rjmp	.+0      	; 0xb4 <main+0x1c>
+  b4:	00 00       	nop
+	
+	while (1) {
+
+		
+		// Slow reverse cycle (255 ? 0)
+		for (uint8_t i = 255; i > 0; i -= 5) {  // Slower decrease
+  b6:	c5 50       	subi	r28, 0x05	; 5
+  b8:	91 f7       	brne	.-28     	; 0x9e <main+0x6>
+			_delay_ms(200);
+		}
+		
+				// Forward cycle (0 ? 255)
+		for (uint8_t i = 0; i < 255; i += 5) {  
+			MCP41010_SetWiper(i);
+  ba:	8c 2f       	mov	r24, r28
+  bc:	0e 94 40 00 	call	0x80	; 0x80 <MCP41010_SetWiper>
+  c0:	2f ef       	ldi	r18, 0xFF	; 255
+  c2:	81 ee       	ldi	r24, 0xE1	; 225
+  c4:	94 e0       	ldi	r25, 0x04	; 4
+  c6:	21 50       	subi	r18, 0x01	; 1
+  c8:	80 40       	sbci	r24, 0x00	; 0
+  ca:	90 40       	sbci	r25, 0x00	; 0
+  cc:	e1 f7       	brne	.-8      	; 0xc6 <main+0x2e>
+  ce:	00 c0       	rjmp	.+0      	; 0xd0 <main+0x38>
+  d0:	00 00       	nop
+			MCP41010_SetWiper(i);
+			_delay_ms(200);
+		}
+		
+				// Forward cycle (0 ? 255)
+		for (uint8_t i = 0; i < 255; i += 5) {  
+  d2:	cb 5f       	subi	r28, 0xFB	; 251
+  d4:	cf 3f       	cpi	r28, 0xFF	; 255
+  d6:	89 f7       	brne	.-30     	; 0xba <main+0x22>
+  d8:	e1 cf       	rjmp	.-62     	; 0x9c <main+0x4>
+
+000000da <_exit>:
+  da:	f8 94       	cli
+
+000000dc <__stop_program>:
+  dc:	ff cf       	rjmp	.-2      	; 0xdc <__stop_program>

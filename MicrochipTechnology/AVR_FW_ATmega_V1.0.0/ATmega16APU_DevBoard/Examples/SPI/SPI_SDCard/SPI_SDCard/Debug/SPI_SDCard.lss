@@ -1,0 +1,1239 @@
+
+SPI_SDCard.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000006b0  00000000  00000000  00000094  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000150  00800060  000006b0  00000744  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .bss          0000020b  008001b0  008001b0  00000894  2**0
+                  ALLOC
+  3 .comment      00000030  00000000  00000000  00000894  2**0
+                  CONTENTS, READONLY
+  4 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  000008c4  2**2
+                  CONTENTS, READONLY
+  5 .debug_aranges 00000128  00000000  00000000  00000900  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_info   00001e5e  00000000  00000000  00000a28  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_abbrev 00000a0e  00000000  00000000  00002886  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_line   000010d1  00000000  00000000  00003294  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_frame  00000390  00000000  00000000  00004368  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_str    00000627  00000000  00000000  000046f8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_loc    000016e4  00000000  00000000  00004d1f  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_ranges 00000108  00000000  00000000  00006403  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 2a 00 	jmp	0x54	; 0x54 <__ctors_end>
+   4:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+   8:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+   c:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  10:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  14:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  18:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  1c:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  20:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  24:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  28:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  2c:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  30:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  34:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  38:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  3c:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  40:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  44:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  48:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  4c:	0c 94 30 03 	jmp	0x660	; 0x660 <__vector_19>
+  50:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+
+00000054 <__ctors_end>:
+  54:	11 24       	eor	r1, r1
+  56:	1f be       	out	0x3f, r1	; 63
+  58:	cf e5       	ldi	r28, 0x5F	; 95
+  5a:	d4 e0       	ldi	r29, 0x04	; 4
+  5c:	de bf       	out	0x3e, r29	; 62
+  5e:	cd bf       	out	0x3d, r28	; 61
+
+00000060 <__do_copy_data>:
+  60:	11 e0       	ldi	r17, 0x01	; 1
+  62:	a0 e6       	ldi	r26, 0x60	; 96
+  64:	b0 e0       	ldi	r27, 0x00	; 0
+  66:	e0 eb       	ldi	r30, 0xB0	; 176
+  68:	f6 e0       	ldi	r31, 0x06	; 6
+  6a:	02 c0       	rjmp	.+4      	; 0x70 <__do_copy_data+0x10>
+  6c:	05 90       	lpm	r0, Z+
+  6e:	0d 92       	st	X+, r0
+  70:	a0 3b       	cpi	r26, 0xB0	; 176
+  72:	b1 07       	cpc	r27, r17
+  74:	d9 f7       	brne	.-10     	; 0x6c <__do_copy_data+0xc>
+
+00000076 <__do_clear_bss>:
+  76:	23 e0       	ldi	r18, 0x03	; 3
+  78:	a0 eb       	ldi	r26, 0xB0	; 176
+  7a:	b1 e0       	ldi	r27, 0x01	; 1
+  7c:	01 c0       	rjmp	.+2      	; 0x80 <.do_clear_bss_start>
+
+0000007e <.do_clear_bss_loop>:
+  7e:	1d 92       	st	X+, r1
+
+00000080 <.do_clear_bss_start>:
+  80:	ab 3b       	cpi	r26, 0xBB	; 187
+  82:	b2 07       	cpc	r27, r18
+  84:	e1 f7       	brne	.-8      	; 0x7e <.do_clear_bss_loop>
+  86:	0e 94 bb 01 	call	0x376	; 0x376 <main>
+  8a:	0c 94 56 03 	jmp	0x6ac	; 0x6ac <_exit>
+
+0000008e <__bad_interrupt>:
+  8e:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+00000092 <port_init>:
+
+// Port Initialization
+void port_init(void)
+{
+    // SPI: PB4 (SS), PB5 (MOSI), PB7 (SCK) outputs; PB6 (MISO) input
+    SPI_DDR  = (1 << SS) | (1 << MOSI) | (1 << SCK);  // Outputs
+  92:	80 eb       	ldi	r24, 0xB0	; 176
+  94:	87 bb       	out	0x17, r24	; 23
+    SPI_PORT = (1 << SS) | (1 << MISO);              // SS high, MISO pull-up
+  96:	80 e5       	ldi	r24, 0x50	; 80
+  98:	88 bb       	out	0x18, r24	; 24
+
+    // UART: PD0 (RXD) input, PD1 (TXD) output; PD2 (LED) output
+    UART_DDR  = (1 << TXD) | (1 << LED);  // TXD and LED outputs
+  9a:	86 e0       	ldi	r24, 0x06	; 6
+  9c:	81 bb       	out	0x11, r24	; 17
+    UART_PORT = (1 << RXD);               // RXD pull-up
+  9e:	81 e0       	ldi	r24, 0x01	; 1
+  a0:	82 bb       	out	0x12, r24	; 18
+  a2:	08 95       	ret
+
+000000a4 <spi_init>:
+}
+
+// SPI Initialization (Master, 125 kHz initially)
+void spi_init(void)
+{
+    SPCR = (1 << SPE) | (1 << MSTR) | (1 << SPR1) | (1 << SPR0);  // Enable SPI, Master, fosc/128
+  a4:	83 e5       	ldi	r24, 0x53	; 83
+  a6:	8d b9       	out	0x0d, r24	; 13
+    SPSR = 0;  // No double speed yet
+  a8:	1e b8       	out	0x0e, r1	; 14
+  aa:	08 95       	ret
+
+000000ac <spi_high_speed>:
+}
+
+// SPI High Speed (4 MHz)
+void spi_high_speed(void)
+{
+    SPCR = (1 << SPE) | (1 << MSTR);  // fosc/4 (2 MHz, adjust if needed)
+  ac:	80 e5       	ldi	r24, 0x50	; 80
+  ae:	8d b9       	out	0x0d, r24	; 13
+    SPSR = (1 << SPI2X);              // Double speed to 4 MHz
+  b0:	81 e0       	ldi	r24, 0x01	; 1
+  b2:	8e b9       	out	0x0e, r24	; 14
+  b4:	08 95       	ret
+
+000000b6 <spi_transmit>:
+}
+
+// SPI Transmit/Receive Byte
+unsigned char spi_transmit(unsigned char data)
+{
+    SPDR = data;
+  b6:	8f b9       	out	0x0f, r24	; 15
+    while (!(SPSR & (1 << SPIF)));  // Wait for transmission complete
+  b8:	77 9b       	sbis	0x0e, 7	; 14
+  ba:	fe cf       	rjmp	.-4      	; 0xb8 <spi_transmit+0x2>
+    return SPDR;                    // Return received byte
+  bc:	8f b1       	in	r24, 0x0f	; 15
+}
+  be:	08 95       	ret
+
+000000c0 <uart_init>:
+
+// UART Initialization (19200 baud @ 8 MHz)
+void uart_init(void)
+{
+    UBRRH = 0x00;                   // Baud rate high byte
+  c0:	10 bc       	out	0x20, r1	; 32
+    UBRRL = 25;                     // Baud rate low byte (19231, 0.2% error)
+  c2:	89 e1       	ldi	r24, 0x19	; 25
+  c4:	89 b9       	out	0x09, r24	; 9
+    UCSRA = 0x00;
+  c6:	1b b8       	out	0x0b, r1	; 11
+    UCSRC = (1 << URSEL) | (1 << UCSZ1) | (1 << UCSZ0);  // 8-bit data
+  c8:	86 e8       	ldi	r24, 0x86	; 134
+  ca:	80 bd       	out	0x20, r24	; 32
+    UCSRB = (1 << RXEN) | (1 << TXEN);                   // Enable RX and TX
+  cc:	88 e1       	ldi	r24, 0x18	; 24
+  ce:	8a b9       	out	0x0a, r24	; 10
+  d0:	08 95       	ret
+
+000000d2 <uart_transmit>:
+}
+
+// UART Transmit Byte
+void uart_transmit(unsigned char data)
+{
+    while (!(UCSRA & (1 << UDRE)));  // Wait for empty transmit buffer
+  d2:	5d 9b       	sbis	0x0b, 5	; 11
+  d4:	fe cf       	rjmp	.-4      	; 0xd2 <uart_transmit>
+    UDR = data;                      // Send data
+  d6:	8c b9       	out	0x0c, r24	; 12
+  d8:	08 95       	ret
+
+000000da <uart_receive>:
+}
+
+// UART Receive Byte
+unsigned char uart_receive(void)
+{
+    while (!(UCSRA & (1 << RXC)));  // Wait for data
+  da:	5f 9b       	sbis	0x0b, 7	; 11
+  dc:	fe cf       	rjmp	.-4      	; 0xda <uart_receive>
+    return UDR;                     // Return received byte
+  de:	8c b1       	in	r24, 0x0c	; 12
+}
+  e0:	08 95       	ret
+
+000000e2 <uart_transmit_string>:
+
+// Transmit String
+void uart_transmit_string(const char *str)
+{
+  e2:	cf 93       	push	r28
+  e4:	df 93       	push	r29
+  e6:	ec 01       	movw	r28, r24
+    while (*str)
+  e8:	88 81       	ld	r24, Y
+  ea:	88 23       	and	r24, r24
+  ec:	31 f0       	breq	.+12     	; 0xfa <uart_transmit_string+0x18>
+  ee:	21 96       	adiw	r28, 0x01	; 1
+        uart_transmit(*str++);
+  f0:	0e 94 69 00 	call	0xd2	; 0xd2 <uart_transmit>
+}
+
+// Transmit String
+void uart_transmit_string(const char *str)
+{
+    while (*str)
+  f4:	89 91       	ld	r24, Y+
+  f6:	81 11       	cpse	r24, r1
+  f8:	fb cf       	rjmp	.-10     	; 0xf0 <uart_transmit_string+0xe>
+        uart_transmit(*str++);
+}
+  fa:	df 91       	pop	r29
+  fc:	cf 91       	pop	r28
+  fe:	08 95       	ret
+
+00000100 <uart_newline>:
+
+// Transmit Newline
+void uart_newline(void)
+{
+    uart_transmit('\r');
+ 100:	8d e0       	ldi	r24, 0x0D	; 13
+ 102:	0e 94 69 00 	call	0xd2	; 0xd2 <uart_transmit>
+    uart_transmit('\n');
+ 106:	8a e0       	ldi	r24, 0x0A	; 10
+ 108:	0e 94 69 00 	call	0xd2	; 0xd2 <uart_transmit>
+ 10c:	08 95       	ret
+
+0000010e <sd_send_command>:
+    return 0;  // Success
+}
+
+// Send SD Card Command
+unsigned char sd_send_command(unsigned char cmd, unsigned long arg)
+{
+ 10e:	0f 93       	push	r16
+ 110:	1f 93       	push	r17
+ 112:	cf 93       	push	r28
+ 114:	df 93       	push	r29
+ 116:	c4 2f       	mov	r28, r20
+ 118:	d5 2f       	mov	r29, r21
+ 11a:	16 2f       	mov	r17, r22
+ 11c:	07 2f       	mov	r16, r23
+    unsigned char response, retry = 0;
+
+    SD_CS_ASSERT;
+ 11e:	c4 98       	cbi	0x18, 4	; 24
+    spi_transmit(cmd | 0x40);  // Command with start bits (01xxxxxx)
+ 120:	80 64       	ori	r24, 0x40	; 64
+ 122:	0e 94 5b 00 	call	0xb6	; 0xb6 <spi_transmit>
+    spi_transmit(arg >> 24);   // Argument bytes
+ 126:	80 2f       	mov	r24, r16
+ 128:	0e 94 5b 00 	call	0xb6	; 0xb6 <spi_transmit>
+    spi_transmit(arg >> 16);
+ 12c:	81 2f       	mov	r24, r17
+ 12e:	0e 94 5b 00 	call	0xb6	; 0xb6 <spi_transmit>
+    spi_transmit(arg >> 8);
+ 132:	8d 2f       	mov	r24, r29
+ 134:	0e 94 5b 00 	call	0xb6	; 0xb6 <spi_transmit>
+    spi_transmit(arg);
+ 138:	8c 2f       	mov	r24, r28
+ 13a:	0e 94 5b 00 	call	0xb6	; 0xb6 <spi_transmit>
+    spi_transmit(0x95);        // CRC (hardcoded for CMD0, ignored later)
+ 13e:	85 e9       	ldi	r24, 0x95	; 149
+ 140:	0e 94 5b 00 	call	0xb6	; 0xb6 <spi_transmit>
+
+    while ((response = spi_transmit(0xFF)) == 0xFF) {
+ 144:	ca ec       	ldi	r28, 0xCA	; 202
+ 146:	02 c0       	rjmp	.+4      	; 0x14c <sd_send_command+0x3e>
+ 148:	c1 50       	subi	r28, 0x01	; 1
+        if (retry++ > 200) break;  // Timeout
+ 14a:	31 f0       	breq	.+12     	; 0x158 <sd_send_command+0x4a>
+    spi_transmit(arg >> 16);
+    spi_transmit(arg >> 8);
+    spi_transmit(arg);
+    spi_transmit(0x95);        // CRC (hardcoded for CMD0, ignored later)
+
+    while ((response = spi_transmit(0xFF)) == 0xFF) {
+ 14c:	8f ef       	ldi	r24, 0xFF	; 255
+ 14e:	0e 94 5b 00 	call	0xb6	; 0xb6 <spi_transmit>
+ 152:	d8 2f       	mov	r29, r24
+ 154:	8f 3f       	cpi	r24, 0xFF	; 255
+ 156:	c1 f3       	breq	.-16     	; 0x148 <sd_send_command+0x3a>
+        if (retry++ > 200) break;  // Timeout
+    }
+
+    SD_CS_DEASSERT;
+ 158:	c4 9a       	sbi	0x18, 4	; 24
+    spi_transmit(0xFF);  // Extra 8 clocks
+ 15a:	8f ef       	ldi	r24, 0xFF	; 255
+ 15c:	0e 94 5b 00 	call	0xb6	; 0xb6 <spi_transmit>
+    return response;
+}
+ 160:	8d 2f       	mov	r24, r29
+ 162:	df 91       	pop	r29
+ 164:	cf 91       	pop	r28
+ 166:	1f 91       	pop	r17
+ 168:	0f 91       	pop	r16
+ 16a:	08 95       	ret
+
+0000016c <sd_init>:
+#define SD_CS_ASSERT   SPI_PORT &= ~(1 << SS)
+#define SD_CS_DEASSERT SPI_PORT |= (1 << SS)
+
+// SD Card Initialization
+unsigned char sd_init(void)
+{
+ 16c:	cf 93       	push	r28
+ 16e:	df 93       	push	r29
+    unsigned char i, response, retry = 0;
+
+    SD_CS_DEASSERT;
+ 170:	c4 9a       	sbi	0x18, 4	; 24
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 172:	8f ec       	ldi	r24, 0xCF	; 207
+ 174:	97 e0       	ldi	r25, 0x07	; 7
+ 176:	01 97       	sbiw	r24, 0x01	; 1
+ 178:	f1 f7       	brne	.-4      	; 0x176 <sd_init+0xa>
+ 17a:	00 c0       	rjmp	.+0      	; 0x17c <sd_init+0x10>
+ 17c:	00 00       	nop
+ 17e:	da e0       	ldi	r29, 0x0A	; 10
+    _delay_ms(1);  // Power-on delay
+
+    // Send 80 clock cycles with CS high
+    for (i = 0; i < 10; i++)
+        spi_transmit(0xFF);
+ 180:	8f ef       	ldi	r24, 0xFF	; 255
+ 182:	0e 94 5b 00 	call	0xb6	; 0xb6 <spi_transmit>
+ 186:	d1 50       	subi	r29, 0x01	; 1
+
+    SD_CS_DEASSERT;
+    _delay_ms(1);  // Power-on delay
+
+    // Send 80 clock cycles with CS high
+    for (i = 0; i < 10; i++)
+ 188:	d9 f7       	brne	.-10     	; 0x180 <sd_init+0x14>
+        spi_transmit(0xFF);
+
+    SD_CS_ASSERT;
+ 18a:	c4 98       	cbi	0x18, 4	; 24
+    do {
+        response = sd_send_command(GO_IDLE_STATE, 0);  // CMD0
+ 18c:	40 e0       	ldi	r20, 0x00	; 0
+ 18e:	50 e0       	ldi	r21, 0x00	; 0
+ 190:	ba 01       	movw	r22, r20
+ 192:	80 e0       	ldi	r24, 0x00	; 0
+ 194:	0e 94 87 00 	call	0x10e	; 0x10e <sd_send_command>
+ 198:	c8 ec       	ldi	r28, 0xC8	; 200
+ 19a:	08 c0       	rjmp	.+16     	; 0x1ac <sd_init+0x40>
+ 19c:	40 e0       	ldi	r20, 0x00	; 0
+ 19e:	50 e0       	ldi	r21, 0x00	; 0
+ 1a0:	ba 01       	movw	r22, r20
+ 1a2:	80 e0       	ldi	r24, 0x00	; 0
+ 1a4:	0e 94 87 00 	call	0x10e	; 0x10e <sd_send_command>
+ 1a8:	c1 50       	subi	r28, 0x01	; 1
+        retry++;
+        if (retry > 200) return 1;  // Timeout
+ 1aa:	b1 f0       	breq	.+44     	; 0x1d8 <sd_init+0x6c>
+    } while (response != 0x01);
+ 1ac:	81 30       	cpi	r24, 0x01	; 1
+ 1ae:	b1 f7       	brne	.-20     	; 0x19c <sd_init+0x30>
+ 1b0:	17 c0       	rjmp	.+46     	; 0x1e0 <sd_init+0x74>
+
+    retry = 0;
+    do {
+        response = sd_send_command(SEND_OP_COND, 0);  // CMD1
+ 1b2:	40 e0       	ldi	r20, 0x00	; 0
+ 1b4:	50 e0       	ldi	r21, 0x00	; 0
+ 1b6:	ba 01       	movw	r22, r20
+ 1b8:	81 e0       	ldi	r24, 0x01	; 1
+ 1ba:	0e 94 87 00 	call	0x10e	; 0x10e <sd_send_command>
+ 1be:	c1 50       	subi	r28, 0x01	; 1
+        retry++;
+        if (retry > 200) return 1;  // Timeout
+ 1c0:	69 f0       	breq	.+26     	; 0x1dc <sd_init+0x70>
+    } while (response != 0x00);
+ 1c2:	81 11       	cpse	r24, r1
+ 1c4:	f6 cf       	rjmp	.-20     	; 0x1b2 <sd_init+0x46>
+
+    sd_send_command(SET_BLOCK_LEN, 512);  // CMD16, set block size to 512
+ 1c6:	40 e0       	ldi	r20, 0x00	; 0
+ 1c8:	52 e0       	ldi	r21, 0x02	; 2
+ 1ca:	60 e0       	ldi	r22, 0x00	; 0
+ 1cc:	70 e0       	ldi	r23, 0x00	; 0
+ 1ce:	80 e1       	ldi	r24, 0x10	; 16
+ 1d0:	0e 94 87 00 	call	0x10e	; 0x10e <sd_send_command>
+    SD_CS_DEASSERT;
+ 1d4:	c4 9a       	sbi	0x18, 4	; 24
+
+    return 0;  // Success
+ 1d6:	0c c0       	rjmp	.+24     	; 0x1f0 <sd_init+0x84>
+
+    SD_CS_ASSERT;
+    do {
+        response = sd_send_command(GO_IDLE_STATE, 0);  // CMD0
+        retry++;
+        if (retry > 200) return 1;  // Timeout
+ 1d8:	d1 e0       	ldi	r29, 0x01	; 1
+ 1da:	0a c0       	rjmp	.+20     	; 0x1f0 <sd_init+0x84>
+
+    retry = 0;
+    do {
+        response = sd_send_command(SEND_OP_COND, 0);  // CMD1
+        retry++;
+        if (retry > 200) return 1;  // Timeout
+ 1dc:	d1 e0       	ldi	r29, 0x01	; 1
+ 1de:	08 c0       	rjmp	.+16     	; 0x1f0 <sd_init+0x84>
+        if (retry > 200) return 1;  // Timeout
+    } while (response != 0x01);
+
+    retry = 0;
+    do {
+        response = sd_send_command(SEND_OP_COND, 0);  // CMD1
+ 1e0:	40 e0       	ldi	r20, 0x00	; 0
+ 1e2:	50 e0       	ldi	r21, 0x00	; 0
+ 1e4:	ba 01       	movw	r22, r20
+ 1e6:	81 e0       	ldi	r24, 0x01	; 1
+ 1e8:	0e 94 87 00 	call	0x10e	; 0x10e <sd_send_command>
+ 1ec:	c8 ec       	ldi	r28, 0xC8	; 200
+ 1ee:	e9 cf       	rjmp	.-46     	; 0x1c2 <sd_init+0x56>
+
+    sd_send_command(SET_BLOCK_LEN, 512);  // CMD16, set block size to 512
+    SD_CS_DEASSERT;
+
+    return 0;  // Success
+}
+ 1f0:	8d 2f       	mov	r24, r29
+ 1f2:	df 91       	pop	r29
+ 1f4:	cf 91       	pop	r28
+ 1f6:	08 95       	ret
+
+000001f8 <sd_read_single_block>:
+    return response;
+}
+
+// Read Single Block
+unsigned char sd_read_single_block(unsigned long block)
+{
+ 1f8:	cf 93       	push	r28
+ 1fa:	df 93       	push	r29
+    unsigned char response;
+    unsigned int i, retry = 0;
+
+    response = sd_send_command(READ_SINGLE_BLOCK, block << 9);  // Convert to byte address
+ 1fc:	ab 01       	movw	r20, r22
+ 1fe:	bc 01       	movw	r22, r24
+ 200:	03 2e       	mov	r0, r19
+ 202:	39 e0       	ldi	r19, 0x09	; 9
+ 204:	44 0f       	add	r20, r20
+ 206:	55 1f       	adc	r21, r21
+ 208:	66 1f       	adc	r22, r22
+ 20a:	77 1f       	adc	r23, r23
+ 20c:	3a 95       	dec	r19
+ 20e:	d1 f7       	brne	.-12     	; 0x204 <sd_read_single_block+0xc>
+ 210:	30 2d       	mov	r19, r0
+ 212:	81 e1       	ldi	r24, 0x11	; 17
+ 214:	0e 94 87 00 	call	0x10e	; 0x10e <sd_send_command>
+    if (response != 0x00) return response;
+ 218:	81 11       	cpse	r24, r1
+ 21a:	24 c0       	rjmp	.+72     	; 0x264 <sd_read_single_block+0x6c>
+
+    SD_CS_ASSERT;
+ 21c:	c4 98       	cbi	0x18, 4	; 24
+    while (spi_transmit(0xFF) != 0xFE) {  // Wait for data token
+ 21e:	ca e8       	ldi	r28, 0x8A	; 138
+ 220:	d3 e1       	ldi	r29, 0x13	; 19
+ 222:	05 c0       	rjmp	.+10     	; 0x22e <sd_read_single_block+0x36>
+ 224:	21 97       	sbiw	r28, 0x01	; 1
+        if (retry++ > 5000) {
+ 226:	19 f4       	brne	.+6      	; 0x22e <sd_read_single_block+0x36>
+            SD_CS_DEASSERT;
+ 228:	c4 9a       	sbi	0x18, 4	; 24
+            return 1;
+ 22a:	81 e0       	ldi	r24, 0x01	; 1
+ 22c:	1b c0       	rjmp	.+54     	; 0x264 <sd_read_single_block+0x6c>
+
+    response = sd_send_command(READ_SINGLE_BLOCK, block << 9);  // Convert to byte address
+    if (response != 0x00) return response;
+
+    SD_CS_ASSERT;
+    while (spi_transmit(0xFF) != 0xFE) {  // Wait for data token
+ 22e:	8f ef       	ldi	r24, 0xFF	; 255
+ 230:	0e 94 5b 00 	call	0xb6	; 0xb6 <spi_transmit>
+ 234:	8e 3f       	cpi	r24, 0xFE	; 254
+ 236:	b1 f7       	brne	.-20     	; 0x224 <sd_read_single_block+0x2c>
+ 238:	c0 e0       	ldi	r28, 0x00	; 0
+ 23a:	d0 e0       	ldi	r29, 0x00	; 0
+            return 1;
+        }
+    }
+
+    for (i = 0; i < 512; i++)  // Read 512 bytes
+        buffer[i] = spi_transmit(0xFF);
+ 23c:	8f ef       	ldi	r24, 0xFF	; 255
+ 23e:	0e 94 5b 00 	call	0xb6	; 0xb6 <spi_transmit>
+ 242:	fe 01       	movw	r30, r28
+ 244:	e9 54       	subi	r30, 0x49	; 73
+ 246:	fe 4f       	sbci	r31, 0xFE	; 254
+ 248:	80 83       	st	Z, r24
+            SD_CS_DEASSERT;
+            return 1;
+        }
+    }
+
+    for (i = 0; i < 512; i++)  // Read 512 bytes
+ 24a:	21 96       	adiw	r28, 0x01	; 1
+ 24c:	c1 15       	cp	r28, r1
+ 24e:	82 e0       	ldi	r24, 0x02	; 2
+ 250:	d8 07       	cpc	r29, r24
+ 252:	a1 f7       	brne	.-24     	; 0x23c <sd_read_single_block+0x44>
+        buffer[i] = spi_transmit(0xFF);
+
+    spi_transmit(0xFF);  // Dummy CRC
+ 254:	8f ef       	ldi	r24, 0xFF	; 255
+ 256:	0e 94 5b 00 	call	0xb6	; 0xb6 <spi_transmit>
+    spi_transmit(0xFF);
+ 25a:	8f ef       	ldi	r24, 0xFF	; 255
+ 25c:	0e 94 5b 00 	call	0xb6	; 0xb6 <spi_transmit>
+    SD_CS_DEASSERT;
+ 260:	c4 9a       	sbi	0x18, 4	; 24
+
+    return 0;
+ 262:	80 e0       	ldi	r24, 0x00	; 0
+}
+ 264:	df 91       	pop	r29
+ 266:	cf 91       	pop	r28
+ 268:	08 95       	ret
+
+0000026a <sd_write_single_block>:
+
+// Write Single Block
+unsigned char sd_write_single_block(unsigned long block)
+{
+ 26a:	cf 93       	push	r28
+ 26c:	df 93       	push	r29
+    unsigned char response;
+    unsigned int i, retry = 0;
+
+    response = sd_send_command(WRITE_SINGLE_BLOCK, block << 9);
+ 26e:	ab 01       	movw	r20, r22
+ 270:	bc 01       	movw	r22, r24
+ 272:	03 2e       	mov	r0, r19
+ 274:	39 e0       	ldi	r19, 0x09	; 9
+ 276:	44 0f       	add	r20, r20
+ 278:	55 1f       	adc	r21, r21
+ 27a:	66 1f       	adc	r22, r22
+ 27c:	77 1f       	adc	r23, r23
+ 27e:	3a 95       	dec	r19
+ 280:	d1 f7       	brne	.-12     	; 0x276 <sd_write_single_block+0xc>
+ 282:	30 2d       	mov	r19, r0
+ 284:	88 e1       	ldi	r24, 0x18	; 24
+ 286:	0e 94 87 00 	call	0x10e	; 0x10e <sd_send_command>
+    if (response != 0x00) return response;
+ 28a:	81 11       	cpse	r24, r1
+ 28c:	2e c0       	rjmp	.+92     	; 0x2ea <sd_write_single_block+0x80>
+
+    SD_CS_ASSERT;
+ 28e:	c4 98       	cbi	0x18, 4	; 24
+    spi_transmit(0xFE);  // Start token
+ 290:	8e ef       	ldi	r24, 0xFE	; 254
+ 292:	0e 94 5b 00 	call	0xb6	; 0xb6 <spi_transmit>
+
+    for (i = 0; i < 512; i++)  // Write 512 bytes
+ 296:	c0 e0       	ldi	r28, 0x00	; 0
+ 298:	d0 e0       	ldi	r29, 0x00	; 0
+        spi_transmit(buffer[i]);
+ 29a:	fe 01       	movw	r30, r28
+ 29c:	e9 54       	subi	r30, 0x49	; 73
+ 29e:	fe 4f       	sbci	r31, 0xFE	; 254
+ 2a0:	80 81       	ld	r24, Z
+ 2a2:	0e 94 5b 00 	call	0xb6	; 0xb6 <spi_transmit>
+    if (response != 0x00) return response;
+
+    SD_CS_ASSERT;
+    spi_transmit(0xFE);  // Start token
+
+    for (i = 0; i < 512; i++)  // Write 512 bytes
+ 2a6:	21 96       	adiw	r28, 0x01	; 1
+ 2a8:	c1 15       	cp	r28, r1
+ 2aa:	82 e0       	ldi	r24, 0x02	; 2
+ 2ac:	d8 07       	cpc	r29, r24
+ 2ae:	a9 f7       	brne	.-22     	; 0x29a <sd_write_single_block+0x30>
+        spi_transmit(buffer[i]);
+
+    spi_transmit(0xFF);  // Dummy CRC
+ 2b0:	8f ef       	ldi	r24, 0xFF	; 255
+ 2b2:	0e 94 5b 00 	call	0xb6	; 0xb6 <spi_transmit>
+    spi_transmit(0xFF);
+ 2b6:	8f ef       	ldi	r24, 0xFF	; 255
+ 2b8:	0e 94 5b 00 	call	0xb6	; 0xb6 <spi_transmit>
+
+    response = spi_transmit(0xFF);
+ 2bc:	8f ef       	ldi	r24, 0xFF	; 255
+ 2be:	0e 94 5b 00 	call	0xb6	; 0xb6 <spi_transmit>
+    if ((response & 0x1F) != 0x05) {  // Data accepted?
+ 2c2:	98 2f       	mov	r25, r24
+ 2c4:	9f 71       	andi	r25, 0x1F	; 31
+ 2c6:	95 30       	cpi	r25, 0x05	; 5
+ 2c8:	39 f0       	breq	.+14     	; 0x2d8 <sd_write_single_block+0x6e>
+        SD_CS_DEASSERT;
+ 2ca:	c4 9a       	sbi	0x18, 4	; 24
+        return response;
+ 2cc:	0e c0       	rjmp	.+28     	; 0x2ea <sd_write_single_block+0x80>
+ 2ce:	21 97       	sbiw	r28, 0x01	; 1
+    }
+
+    while (spi_transmit(0xFF) == 0) {  // Wait for write to finish
+        if (retry++ > 5000) {
+ 2d0:	29 f4       	brne	.+10     	; 0x2dc <sd_write_single_block+0x72>
+            SD_CS_DEASSERT;
+ 2d2:	c4 9a       	sbi	0x18, 4	; 24
+            return 1;
+ 2d4:	81 e0       	ldi	r24, 0x01	; 1
+ 2d6:	09 c0       	rjmp	.+18     	; 0x2ea <sd_write_single_block+0x80>
+ 2d8:	ca e8       	ldi	r28, 0x8A	; 138
+ 2da:	d3 e1       	ldi	r29, 0x13	; 19
+    if ((response & 0x1F) != 0x05) {  // Data accepted?
+        SD_CS_DEASSERT;
+        return response;
+    }
+
+    while (spi_transmit(0xFF) == 0) {  // Wait for write to finish
+ 2dc:	8f ef       	ldi	r24, 0xFF	; 255
+ 2de:	0e 94 5b 00 	call	0xb6	; 0xb6 <spi_transmit>
+ 2e2:	88 23       	and	r24, r24
+ 2e4:	a1 f3       	breq	.-24     	; 0x2ce <sd_write_single_block+0x64>
+            SD_CS_DEASSERT;
+            return 1;
+        }
+    }
+
+    SD_CS_DEASSERT;
+ 2e6:	c4 9a       	sbi	0x18, 4	; 24
+    return 0;
+ 2e8:	80 e0       	ldi	r24, 0x00	; 0
+}
+ 2ea:	df 91       	pop	r29
+ 2ec:	cf 91       	pop	r28
+ 2ee:	08 95       	ret
+
+000002f0 <sd_erase>:
+
+// Erase Blocks
+unsigned char sd_erase(unsigned long start, unsigned long total)
+{
+ 2f0:	8f 92       	push	r8
+ 2f2:	9f 92       	push	r9
+ 2f4:	af 92       	push	r10
+ 2f6:	bf 92       	push	r11
+ 2f8:	cf 92       	push	r12
+ 2fa:	df 92       	push	r13
+ 2fc:	ef 92       	push	r14
+ 2fe:	ff 92       	push	r15
+ 300:	6b 01       	movw	r12, r22
+ 302:	7c 01       	movw	r14, r24
+ 304:	49 01       	movw	r8, r18
+ 306:	5a 01       	movw	r10, r20
+    unsigned char response;
+
+    response = sd_send_command(ERASE_BLOCK_START, start << 9);
+ 308:	ab 01       	movw	r20, r22
+ 30a:	bc 01       	movw	r22, r24
+ 30c:	03 2e       	mov	r0, r19
+ 30e:	39 e0       	ldi	r19, 0x09	; 9
+ 310:	44 0f       	add	r20, r20
+ 312:	55 1f       	adc	r21, r21
+ 314:	66 1f       	adc	r22, r22
+ 316:	77 1f       	adc	r23, r23
+ 318:	3a 95       	dec	r19
+ 31a:	d1 f7       	brne	.-12     	; 0x310 <sd_erase+0x20>
+ 31c:	30 2d       	mov	r19, r0
+ 31e:	80 e2       	ldi	r24, 0x20	; 32
+ 320:	0e 94 87 00 	call	0x10e	; 0x10e <sd_send_command>
+    if (response != 0x00) return response;
+ 324:	81 11       	cpse	r24, r1
+ 326:	1e c0       	rjmp	.+60     	; 0x364 <sd_erase+0x74>
+
+    response = sd_send_command(ERASE_BLOCK_END, (start + total - 1) << 9);
+ 328:	b5 01       	movw	r22, r10
+ 32a:	a4 01       	movw	r20, r8
+ 32c:	41 50       	subi	r20, 0x01	; 1
+ 32e:	51 09       	sbc	r21, r1
+ 330:	61 09       	sbc	r22, r1
+ 332:	71 09       	sbc	r23, r1
+ 334:	4c 0d       	add	r20, r12
+ 336:	5d 1d       	adc	r21, r13
+ 338:	6e 1d       	adc	r22, r14
+ 33a:	7f 1d       	adc	r23, r15
+ 33c:	03 2e       	mov	r0, r19
+ 33e:	39 e0       	ldi	r19, 0x09	; 9
+ 340:	44 0f       	add	r20, r20
+ 342:	55 1f       	adc	r21, r21
+ 344:	66 1f       	adc	r22, r22
+ 346:	77 1f       	adc	r23, r23
+ 348:	3a 95       	dec	r19
+ 34a:	d1 f7       	brne	.-12     	; 0x340 <sd_erase+0x50>
+ 34c:	30 2d       	mov	r19, r0
+ 34e:	81 e2       	ldi	r24, 0x21	; 33
+ 350:	0e 94 87 00 	call	0x10e	; 0x10e <sd_send_command>
+    if (response != 0x00) return response;
+ 354:	81 11       	cpse	r24, r1
+ 356:	06 c0       	rjmp	.+12     	; 0x364 <sd_erase+0x74>
+
+    response = sd_send_command(ERASE_SELECTED, 0);
+ 358:	40 e0       	ldi	r20, 0x00	; 0
+ 35a:	50 e0       	ldi	r21, 0x00	; 0
+ 35c:	ba 01       	movw	r22, r20
+ 35e:	86 e2       	ldi	r24, 0x26	; 38
+ 360:	0e 94 87 00 	call	0x10e	; 0x10e <sd_send_command>
+    if (response != 0x00) return response;
+
+    return 0;
+}
+ 364:	ff 90       	pop	r15
+ 366:	ef 90       	pop	r14
+ 368:	df 90       	pop	r13
+ 36a:	cf 90       	pop	r12
+ 36c:	bf 90       	pop	r11
+ 36e:	af 90       	pop	r10
+ 370:	9f 90       	pop	r9
+ 372:	8f 90       	pop	r8
+ 374:	08 95       	ret
+
+00000376 <main>:
+int main(void)
+{
+    unsigned char option, data, error;
+    unsigned int i;
+
+    port_init();
+ 376:	0e 94 49 00 	call	0x92	; 0x92 <port_init>
+    spi_init();
+ 37a:	0e 94 52 00 	call	0xa4	; 0xa4 <spi_init>
+    uart_init();
+ 37e:	0e 94 60 00 	call	0xc0	; 0xc0 <uart_init>
+ 382:	2f ef       	ldi	r18, 0xFF	; 255
+ 384:	80 e7       	ldi	r24, 0x70	; 112
+ 386:	92 e0       	ldi	r25, 0x02	; 2
+ 388:	21 50       	subi	r18, 0x01	; 1
+ 38a:	80 40       	sbci	r24, 0x00	; 0
+ 38c:	90 40       	sbci	r25, 0x00	; 0
+ 38e:	e1 f7       	brne	.-8      	; 0x388 <main+0x12>
+ 390:	00 c0       	rjmp	.+0      	; 0x392 <main+0x1c>
+ 392:	00 00       	nop
+
+    _delay_ms(100);  // VCC stabilization
+    UART_PORT |= (1 << LED);  // LED on
+ 394:	92 9a       	sbi	0x12, 2	; 18
+
+    uart_transmit_string("ATmega16 SD Card Test\r\n");
+ 396:	80 e6       	ldi	r24, 0x60	; 96
+ 398:	90 e0       	ldi	r25, 0x00	; 0
+ 39a:	0e 94 71 00 	call	0xe2	; 0xe2 <uart_transmit_string>
+    if (sd_init() == 0) {
+ 39e:	0e 94 b6 00 	call	0x16c	; 0x16c <sd_init>
+ 3a2:	81 11       	cpse	r24, r1
+ 3a4:	0f c0       	rjmp	.+30     	; 0x3c4 <main+0x4e>
+        uart_transmit_string("SD Card Initialized\r\n");
+ 3a6:	88 e7       	ldi	r24, 0x78	; 120
+ 3a8:	90 e0       	ldi	r25, 0x00	; 0
+ 3aa:	0e 94 71 00 	call	0xe2	; 0xe2 <uart_transmit_string>
+        spi_high_speed();  // Switch to 4 MHz SPI
+ 3ae:	0e 94 56 00 	call	0xac	; 0xac <spi_high_speed>
+                else uart_transmit_string("Erase OK\r\n");
+                break;
+
+            case '1':
+                uart_transmit_string("Enter 512 bytes (end with ~): ");
+                i = 0;
+ 3b2:	e1 2c       	mov	r14, r1
+ 3b4:	f1 2c       	mov	r15, r1
+                error = sd_read_single_block(startBlock);
+                if (error) {
+                    uart_transmit_string("Read Failed\r\n");
+                } else {
+                    uart_transmit_string("Data: ");
+                    for (i = 0; i < 512 && buffer[i] != '~'; i++)
+ 3b6:	0f 2e       	mov	r0, r31
+ 3b8:	f7 eb       	ldi	r31, 0xB7	; 183
+ 3ba:	af 2e       	mov	r10, r31
+ 3bc:	f1 e0       	ldi	r31, 0x01	; 1
+ 3be:	bf 2e       	mov	r11, r31
+ 3c0:	f0 2d       	mov	r31, r0
+ 3c2:	05 c0       	rjmp	.+10     	; 0x3ce <main+0x58>
+    uart_transmit_string("ATmega16 SD Card Test\r\n");
+    if (sd_init() == 0) {
+        uart_transmit_string("SD Card Initialized\r\n");
+        spi_high_speed();  // Switch to 4 MHz SPI
+    } else {
+        uart_transmit_string("SD Init Failed\r\n");
+ 3c4:	8e e8       	ldi	r24, 0x8E	; 142
+ 3c6:	90 e0       	ldi	r25, 0x00	; 0
+ 3c8:	0e 94 71 00 	call	0xe2	; 0xe2 <uart_transmit_string>
+ 3cc:	ff cf       	rjmp	.-2      	; 0x3cc <main+0x56>
+        while (1);  // Halt
+    }
+
+    while (1) {
+        uart_transmit_string("\r\nMenu:\r\n");
+ 3ce:	8f e9       	ldi	r24, 0x9F	; 159
+ 3d0:	90 e0       	ldi	r25, 0x00	; 0
+ 3d2:	0e 94 71 00 	call	0xe2	; 0xe2 <uart_transmit_string>
+        uart_transmit_string("0: Erase Blocks\r\n");
+ 3d6:	89 ea       	ldi	r24, 0xA9	; 169
+ 3d8:	90 e0       	ldi	r25, 0x00	; 0
+ 3da:	0e 94 71 00 	call	0xe2	; 0xe2 <uart_transmit_string>
+        uart_transmit_string("1: Write Single Block\r\n");
+ 3de:	8b eb       	ldi	r24, 0xBB	; 187
+ 3e0:	90 e0       	ldi	r25, 0x00	; 0
+ 3e2:	0e 94 71 00 	call	0xe2	; 0xe2 <uart_transmit_string>
+        uart_transmit_string("2: Read Single Block\r\n");
+ 3e6:	83 ed       	ldi	r24, 0xD3	; 211
+ 3e8:	90 e0       	ldi	r25, 0x00	; 0
+ 3ea:	0e 94 71 00 	call	0xe2	; 0xe2 <uart_transmit_string>
+        uart_transmit_string("Select (0-2): ");
+ 3ee:	8a ee       	ldi	r24, 0xEA	; 234
+ 3f0:	90 e0       	ldi	r25, 0x00	; 0
+ 3f2:	0e 94 71 00 	call	0xe2	; 0xe2 <uart_transmit_string>
+
+        option = uart_receive();
+ 3f6:	0e 94 6d 00 	call	0xda	; 0xda <uart_receive>
+ 3fa:	18 2f       	mov	r17, r24
+        uart_transmit(option);
+ 3fc:	0e 94 69 00 	call	0xd2	; 0xd2 <uart_transmit>
+        uart_newline();
+ 400:	0e 94 80 00 	call	0x100	; 0x100 <uart_newline>
+
+        if (option >= '0' && option <= '2') {
+ 404:	80 ed       	ldi	r24, 0xD0	; 208
+ 406:	81 0f       	add	r24, r17
+ 408:	83 30       	cpi	r24, 0x03	; 3
+ 40a:	08 f0       	brcs	.+2      	; 0x40e <__LOCK_REGION_LENGTH__+0xe>
+ 40c:	45 c0       	rjmp	.+138    	; 0x498 <__stack+0x39>
+            uart_transmit_string("Enter Block (0-9999): ");
+ 40e:	89 ef       	ldi	r24, 0xF9	; 249
+ 410:	90 e0       	ldi	r25, 0x00	; 0
+ 412:	0e 94 71 00 	call	0xe2	; 0xe2 <uart_transmit_string>
+            startBlock = 0;
+ 416:	10 92 b3 01 	sts	0x01B3, r1	; 0x8001b3 <startBlock>
+ 41a:	10 92 b4 01 	sts	0x01B4, r1	; 0x8001b4 <startBlock+0x1>
+ 41e:	10 92 b5 01 	sts	0x01B5, r1	; 0x8001b5 <startBlock+0x2>
+ 422:	10 92 b6 01 	sts	0x01B6, r1	; 0x8001b6 <startBlock+0x3>
+ 426:	c4 e0       	ldi	r28, 0x04	; 4
+ 428:	d0 e0       	ldi	r29, 0x00	; 0
+            for (i = 0; i < 4; i++) {
+                data = uart_receive();
+ 42a:	0e 94 6d 00 	call	0xda	; 0xda <uart_receive>
+ 42e:	c8 2e       	mov	r12, r24
+                uart_transmit(data);
+ 430:	0e 94 69 00 	call	0xd2	; 0xd2 <uart_transmit>
+                startBlock = startBlock * 10 + (data - '0');
+ 434:	80 91 b3 01 	lds	r24, 0x01B3	; 0x8001b3 <startBlock>
+ 438:	90 91 b4 01 	lds	r25, 0x01B4	; 0x8001b4 <startBlock+0x1>
+ 43c:	a0 91 b5 01 	lds	r26, 0x01B5	; 0x8001b5 <startBlock+0x2>
+ 440:	b0 91 b6 01 	lds	r27, 0x01B6	; 0x8001b6 <startBlock+0x3>
+ 444:	88 0f       	add	r24, r24
+ 446:	99 1f       	adc	r25, r25
+ 448:	aa 1f       	adc	r26, r26
+ 44a:	bb 1f       	adc	r27, r27
+ 44c:	ac 01       	movw	r20, r24
+ 44e:	bd 01       	movw	r22, r26
+ 450:	44 0f       	add	r20, r20
+ 452:	55 1f       	adc	r21, r21
+ 454:	66 1f       	adc	r22, r22
+ 456:	77 1f       	adc	r23, r23
+ 458:	44 0f       	add	r20, r20
+ 45a:	55 1f       	adc	r21, r21
+ 45c:	66 1f       	adc	r22, r22
+ 45e:	77 1f       	adc	r23, r23
+ 460:	84 0f       	add	r24, r20
+ 462:	95 1f       	adc	r25, r21
+ 464:	a6 1f       	adc	r26, r22
+ 466:	b7 1f       	adc	r27, r23
+ 468:	4c 2d       	mov	r20, r12
+ 46a:	50 e0       	ldi	r21, 0x00	; 0
+ 46c:	40 53       	subi	r20, 0x30	; 48
+ 46e:	51 09       	sbc	r21, r1
+ 470:	05 2e       	mov	r0, r21
+ 472:	00 0c       	add	r0, r0
+ 474:	66 0b       	sbc	r22, r22
+ 476:	77 0b       	sbc	r23, r23
+ 478:	84 0f       	add	r24, r20
+ 47a:	95 1f       	adc	r25, r21
+ 47c:	a6 1f       	adc	r26, r22
+ 47e:	b7 1f       	adc	r27, r23
+ 480:	80 93 b3 01 	sts	0x01B3, r24	; 0x8001b3 <startBlock>
+ 484:	90 93 b4 01 	sts	0x01B4, r25	; 0x8001b4 <startBlock+0x1>
+ 488:	a0 93 b5 01 	sts	0x01B5, r26	; 0x8001b5 <startBlock+0x2>
+ 48c:	b0 93 b6 01 	sts	0x01B6, r27	; 0x8001b6 <startBlock+0x3>
+ 490:	21 97       	sbiw	r28, 0x01	; 1
+        uart_newline();
+
+        if (option >= '0' && option <= '2') {
+            uart_transmit_string("Enter Block (0-9999): ");
+            startBlock = 0;
+            for (i = 0; i < 4; i++) {
+ 492:	59 f6       	brne	.-106    	; 0x42a <__LOCK_REGION_LENGTH__+0x2a>
+                data = uart_receive();
+                uart_transmit(data);
+                startBlock = startBlock * 10 + (data - '0');
+            }
+            uart_newline();
+ 494:	0e 94 80 00 	call	0x100	; 0x100 <uart_newline>
+        }
+
+        switch (option) {
+ 498:	11 33       	cpi	r17, 0x31	; 49
+ 49a:	09 f4       	brne	.+2      	; 0x49e <__stack+0x3f>
+ 49c:	69 c0       	rjmp	.+210    	; 0x570 <__stack+0x111>
+ 49e:	12 33       	cpi	r17, 0x32	; 50
+ 4a0:	09 f4       	brne	.+2      	; 0x4a4 <__stack+0x45>
+ 4a2:	a2 c0       	rjmp	.+324    	; 0x5e8 <__stack+0x189>
+ 4a4:	10 33       	cpi	r17, 0x30	; 48
+ 4a6:	09 f0       	breq	.+2      	; 0x4aa <__stack+0x4b>
+ 4a8:	cf c0       	rjmp	.+414    	; 0x648 <__stack+0x1e9>
+            case '0':
+                uart_transmit_string("Blocks to Erase (1-999): ");
+ 4aa:	80 e1       	ldi	r24, 0x10	; 16
+ 4ac:	91 e0       	ldi	r25, 0x01	; 1
+ 4ae:	0e 94 71 00 	call	0xe2	; 0xe2 <uart_transmit_string>
+                totalBlocks = 0;
+ 4b2:	10 92 b7 03 	sts	0x03B7, r1	; 0x8003b7 <totalBlocks>
+ 4b6:	10 92 b8 03 	sts	0x03B8, r1	; 0x8003b8 <totalBlocks+0x1>
+ 4ba:	10 92 b9 03 	sts	0x03B9, r1	; 0x8003b9 <totalBlocks+0x2>
+ 4be:	10 92 ba 03 	sts	0x03BA, r1	; 0x8003ba <totalBlocks+0x3>
+ 4c2:	c3 e0       	ldi	r28, 0x03	; 3
+ 4c4:	d0 e0       	ldi	r29, 0x00	; 0
+                for (i = 0; i < 3; i++) {
+                    data = uart_receive();
+ 4c6:	0e 94 6d 00 	call	0xda	; 0xda <uart_receive>
+ 4ca:	d8 2e       	mov	r13, r24
+                    uart_transmit(data);
+ 4cc:	0e 94 69 00 	call	0xd2	; 0xd2 <uart_transmit>
+                    totalBlocks = totalBlocks * 10 + (data - '0');
+ 4d0:	80 91 b7 03 	lds	r24, 0x03B7	; 0x8003b7 <totalBlocks>
+ 4d4:	90 91 b8 03 	lds	r25, 0x03B8	; 0x8003b8 <totalBlocks+0x1>
+ 4d8:	a0 91 b9 03 	lds	r26, 0x03B9	; 0x8003b9 <totalBlocks+0x2>
+ 4dc:	b0 91 ba 03 	lds	r27, 0x03BA	; 0x8003ba <totalBlocks+0x3>
+ 4e0:	88 0f       	add	r24, r24
+ 4e2:	99 1f       	adc	r25, r25
+ 4e4:	aa 1f       	adc	r26, r26
+ 4e6:	bb 1f       	adc	r27, r27
+ 4e8:	ac 01       	movw	r20, r24
+ 4ea:	bd 01       	movw	r22, r26
+ 4ec:	44 0f       	add	r20, r20
+ 4ee:	55 1f       	adc	r21, r21
+ 4f0:	66 1f       	adc	r22, r22
+ 4f2:	77 1f       	adc	r23, r23
+ 4f4:	44 0f       	add	r20, r20
+ 4f6:	55 1f       	adc	r21, r21
+ 4f8:	66 1f       	adc	r22, r22
+ 4fa:	77 1f       	adc	r23, r23
+ 4fc:	84 0f       	add	r24, r20
+ 4fe:	95 1f       	adc	r25, r21
+ 500:	a6 1f       	adc	r26, r22
+ 502:	b7 1f       	adc	r27, r23
+ 504:	4d 2d       	mov	r20, r13
+ 506:	50 e0       	ldi	r21, 0x00	; 0
+ 508:	40 53       	subi	r20, 0x30	; 48
+ 50a:	51 09       	sbc	r21, r1
+ 50c:	05 2e       	mov	r0, r21
+ 50e:	00 0c       	add	r0, r0
+ 510:	66 0b       	sbc	r22, r22
+ 512:	77 0b       	sbc	r23, r23
+ 514:	84 0f       	add	r24, r20
+ 516:	95 1f       	adc	r25, r21
+ 518:	a6 1f       	adc	r26, r22
+ 51a:	b7 1f       	adc	r27, r23
+ 51c:	80 93 b7 03 	sts	0x03B7, r24	; 0x8003b7 <totalBlocks>
+ 520:	90 93 b8 03 	sts	0x03B8, r25	; 0x8003b8 <totalBlocks+0x1>
+ 524:	a0 93 b9 03 	sts	0x03B9, r26	; 0x8003b9 <totalBlocks+0x2>
+ 528:	b0 93 ba 03 	sts	0x03BA, r27	; 0x8003ba <totalBlocks+0x3>
+ 52c:	21 97       	sbiw	r28, 0x01	; 1
+
+        switch (option) {
+            case '0':
+                uart_transmit_string("Blocks to Erase (1-999): ");
+                totalBlocks = 0;
+                for (i = 0; i < 3; i++) {
+ 52e:	59 f6       	brne	.-106    	; 0x4c6 <__stack+0x67>
+                    data = uart_receive();
+                    uart_transmit(data);
+                    totalBlocks = totalBlocks * 10 + (data - '0');
+                }
+                uart_newline();
+ 530:	0e 94 80 00 	call	0x100	; 0x100 <uart_newline>
+                error = sd_erase(startBlock, totalBlocks);
+ 534:	20 91 b7 03 	lds	r18, 0x03B7	; 0x8003b7 <totalBlocks>
+ 538:	30 91 b8 03 	lds	r19, 0x03B8	; 0x8003b8 <totalBlocks+0x1>
+ 53c:	40 91 b9 03 	lds	r20, 0x03B9	; 0x8003b9 <totalBlocks+0x2>
+ 540:	50 91 ba 03 	lds	r21, 0x03BA	; 0x8003ba <totalBlocks+0x3>
+ 544:	60 91 b3 01 	lds	r22, 0x01B3	; 0x8001b3 <startBlock>
+ 548:	70 91 b4 01 	lds	r23, 0x01B4	; 0x8001b4 <startBlock+0x1>
+ 54c:	80 91 b5 01 	lds	r24, 0x01B5	; 0x8001b5 <startBlock+0x2>
+ 550:	90 91 b6 01 	lds	r25, 0x01B6	; 0x8001b6 <startBlock+0x3>
+ 554:	0e 94 78 01 	call	0x2f0	; 0x2f0 <sd_erase>
+                if (error) uart_transmit_string("Erase Failed\r\n");
+ 558:	88 23       	and	r24, r24
+ 55a:	29 f0       	breq	.+10     	; 0x566 <__stack+0x107>
+ 55c:	8a e2       	ldi	r24, 0x2A	; 42
+ 55e:	91 e0       	ldi	r25, 0x01	; 1
+ 560:	0e 94 71 00 	call	0xe2	; 0xe2 <uart_transmit_string>
+ 564:	34 cf       	rjmp	.-408    	; 0x3ce <main+0x58>
+                else uart_transmit_string("Erase OK\r\n");
+ 566:	89 e3       	ldi	r24, 0x39	; 57
+ 568:	91 e0       	ldi	r25, 0x01	; 1
+ 56a:	0e 94 71 00 	call	0xe2	; 0xe2 <uart_transmit_string>
+ 56e:	2f cf       	rjmp	.-418    	; 0x3ce <main+0x58>
+                break;
+
+            case '1':
+                uart_transmit_string("Enter 512 bytes (end with ~): ");
+ 570:	84 e4       	ldi	r24, 0x44	; 68
+ 572:	91 e0       	ldi	r25, 0x01	; 1
+ 574:	0e 94 71 00 	call	0xe2	; 0xe2 <uart_transmit_string>
+                i = 0;
+ 578:	ce 2d       	mov	r28, r14
+ 57a:	df 2d       	mov	r29, r15
+                do {
+                    data = uart_receive();
+ 57c:	0e 94 6d 00 	call	0xda	; 0xda <uart_receive>
+ 580:	18 2f       	mov	r17, r24
+                    uart_transmit(data);
+ 582:	0e 94 69 00 	call	0xd2	; 0xd2 <uart_transmit>
+                    buffer[i++] = data;
+ 586:	ce 01       	movw	r24, r28
+ 588:	01 96       	adiw	r24, 0x01	; 1
+ 58a:	c9 54       	subi	r28, 0x49	; 73
+ 58c:	de 4f       	sbci	r29, 0xFE	; 254
+ 58e:	18 83       	st	Y, r17
+                } while (data != '~' && i < 512);
+ 590:	1e 37       	cpi	r17, 0x7E	; 126
+ 592:	29 f4       	brne	.+10     	; 0x59e <__stack+0x13f>
+                for (; i < 512; i++) buffer[i] = 0;  // Pad with zeros
+ 594:	81 15       	cp	r24, r1
+ 596:	22 e0       	ldi	r18, 0x02	; 2
+ 598:	92 07       	cpc	r25, r18
+ 59a:	38 f0       	brcs	.+14     	; 0x5aa <__stack+0x14b>
+ 59c:	0f c0       	rjmp	.+30     	; 0x5bc <__stack+0x15d>
+                uart_transmit_string("Enter 512 bytes (end with ~): ");
+                i = 0;
+                do {
+                    data = uart_receive();
+                    uart_transmit(data);
+                    buffer[i++] = data;
+ 59e:	ec 01       	movw	r28, r24
+                } while (data != '~' && i < 512);
+ 5a0:	c1 15       	cp	r28, r1
+ 5a2:	82 e0       	ldi	r24, 0x02	; 2
+ 5a4:	d8 07       	cpc	r29, r24
+ 5a6:	51 f7       	brne	.-44     	; 0x57c <__stack+0x11d>
+ 5a8:	09 c0       	rjmp	.+18     	; 0x5bc <__stack+0x15d>
+                for (; i < 512; i++) buffer[i] = 0;  // Pad with zeros
+ 5aa:	fc 01       	movw	r30, r24
+ 5ac:	e9 54       	subi	r30, 0x49	; 73
+ 5ae:	fe 4f       	sbci	r31, 0xFE	; 254
+ 5b0:	10 82       	st	Z, r1
+ 5b2:	01 96       	adiw	r24, 0x01	; 1
+ 5b4:	81 15       	cp	r24, r1
+ 5b6:	e2 e0       	ldi	r30, 0x02	; 2
+ 5b8:	9e 07       	cpc	r25, r30
+ 5ba:	b9 f7       	brne	.-18     	; 0x5aa <__stack+0x14b>
+                error = sd_write_single_block(startBlock);
+ 5bc:	60 91 b3 01 	lds	r22, 0x01B3	; 0x8001b3 <startBlock>
+ 5c0:	70 91 b4 01 	lds	r23, 0x01B4	; 0x8001b4 <startBlock+0x1>
+ 5c4:	80 91 b5 01 	lds	r24, 0x01B5	; 0x8001b5 <startBlock+0x2>
+ 5c8:	90 91 b6 01 	lds	r25, 0x01B6	; 0x8001b6 <startBlock+0x3>
+ 5cc:	0e 94 35 01 	call	0x26a	; 0x26a <sd_write_single_block>
+                if (error) uart_transmit_string("Write Failed\r\n");
+ 5d0:	88 23       	and	r24, r24
+ 5d2:	29 f0       	breq	.+10     	; 0x5de <__stack+0x17f>
+ 5d4:	83 e6       	ldi	r24, 0x63	; 99
+ 5d6:	91 e0       	ldi	r25, 0x01	; 1
+ 5d8:	0e 94 71 00 	call	0xe2	; 0xe2 <uart_transmit_string>
+ 5dc:	f8 ce       	rjmp	.-528    	; 0x3ce <main+0x58>
+                else uart_transmit_string("Write OK\r\n");
+ 5de:	82 e7       	ldi	r24, 0x72	; 114
+ 5e0:	91 e0       	ldi	r25, 0x01	; 1
+ 5e2:	0e 94 71 00 	call	0xe2	; 0xe2 <uart_transmit_string>
+ 5e6:	f3 ce       	rjmp	.-538    	; 0x3ce <main+0x58>
+                break;
+
+            case '2':
+                error = sd_read_single_block(startBlock);
+ 5e8:	60 91 b3 01 	lds	r22, 0x01B3	; 0x8001b3 <startBlock>
+ 5ec:	70 91 b4 01 	lds	r23, 0x01B4	; 0x8001b4 <startBlock+0x1>
+ 5f0:	80 91 b5 01 	lds	r24, 0x01B5	; 0x8001b5 <startBlock+0x2>
+ 5f4:	90 91 b6 01 	lds	r25, 0x01B6	; 0x8001b6 <startBlock+0x3>
+ 5f8:	0e 94 fc 00 	call	0x1f8	; 0x1f8 <sd_read_single_block>
+                if (error) {
+ 5fc:	88 23       	and	r24, r24
+ 5fe:	29 f0       	breq	.+10     	; 0x60a <__stack+0x1ab>
+                    uart_transmit_string("Read Failed\r\n");
+ 600:	8d e7       	ldi	r24, 0x7D	; 125
+ 602:	91 e0       	ldi	r25, 0x01	; 1
+ 604:	0e 94 71 00 	call	0xe2	; 0xe2 <uart_transmit_string>
+ 608:	e2 ce       	rjmp	.-572    	; 0x3ce <main+0x58>
+                } else {
+                    uart_transmit_string("Data: ");
+ 60a:	8b e8       	ldi	r24, 0x8B	; 139
+ 60c:	91 e0       	ldi	r25, 0x01	; 1
+ 60e:	0e 94 71 00 	call	0xe2	; 0xe2 <uart_transmit_string>
+                    for (i = 0; i < 512 && buffer[i] != '~'; i++)
+ 612:	f5 01       	movw	r30, r10
+ 614:	80 81       	ld	r24, Z
+ 616:	8e 37       	cpi	r24, 0x7E	; 126
+ 618:	e1 f4       	brne	.+56     	; 0x652 <__stack+0x1f3>
+ 61a:	11 c0       	rjmp	.+34     	; 0x63e <__stack+0x1df>
+                        uart_transmit(buffer[i]);
+ 61c:	fe 01       	movw	r30, r28
+ 61e:	e9 54       	subi	r30, 0x49	; 73
+ 620:	fe 4f       	sbci	r31, 0xFE	; 254
+ 622:	80 81       	ld	r24, Z
+ 624:	0e 94 69 00 	call	0xd2	; 0xd2 <uart_transmit>
+                error = sd_read_single_block(startBlock);
+                if (error) {
+                    uart_transmit_string("Read Failed\r\n");
+                } else {
+                    uart_transmit_string("Data: ");
+                    for (i = 0; i < 512 && buffer[i] != '~'; i++)
+ 628:	21 96       	adiw	r28, 0x01	; 1
+ 62a:	c1 15       	cp	r28, r1
+ 62c:	f2 e0       	ldi	r31, 0x02	; 2
+ 62e:	df 07       	cpc	r29, r31
+ 630:	31 f0       	breq	.+12     	; 0x63e <__stack+0x1df>
+ 632:	fe 01       	movw	r30, r28
+ 634:	e9 54       	subi	r30, 0x49	; 73
+ 636:	fe 4f       	sbci	r31, 0xFE	; 254
+ 638:	80 81       	ld	r24, Z
+ 63a:	8e 37       	cpi	r24, 0x7E	; 126
+ 63c:	79 f7       	brne	.-34     	; 0x61c <__stack+0x1bd>
+                        uart_transmit(buffer[i]);
+                    uart_transmit_string("\r\nRead OK\r\n");
+ 63e:	82 e9       	ldi	r24, 0x92	; 146
+ 640:	91 e0       	ldi	r25, 0x01	; 1
+ 642:	0e 94 71 00 	call	0xe2	; 0xe2 <uart_transmit_string>
+ 646:	c3 ce       	rjmp	.-634    	; 0x3ce <main+0x58>
+                }
+                break;
+
+            default:
+                uart_transmit_string("Invalid Option\r\n");
+ 648:	8e e9       	ldi	r24, 0x9E	; 158
+ 64a:	91 e0       	ldi	r25, 0x01	; 1
+ 64c:	0e 94 71 00 	call	0xe2	; 0xe2 <uart_transmit_string>
+ 650:	be ce       	rjmp	.-644    	; 0x3ce <main+0x58>
+                if (error) {
+                    uart_transmit_string("Read Failed\r\n");
+                } else {
+                    uart_transmit_string("Data: ");
+                    for (i = 0; i < 512 && buffer[i] != '~'; i++)
+                        uart_transmit(buffer[i]);
+ 652:	f5 01       	movw	r30, r10
+ 654:	80 81       	ld	r24, Z
+ 656:	0e 94 69 00 	call	0xd2	; 0xd2 <uart_transmit>
+                error = sd_read_single_block(startBlock);
+                if (error) {
+                    uart_transmit_string("Read Failed\r\n");
+                } else {
+                    uart_transmit_string("Data: ");
+                    for (i = 0; i < 512 && buffer[i] != '~'; i++)
+ 65a:	c1 e0       	ldi	r28, 0x01	; 1
+ 65c:	d0 e0       	ldi	r29, 0x00	; 0
+ 65e:	e9 cf       	rjmp	.-46     	; 0x632 <__stack+0x1d3>
+
+00000660 <__vector_19>:
+static volatile BYTE Timer1;
+static volatile UINT Timer2;
+static BYTE CardType;
+
+/* Timer0 ISR for 100 Hz decrement */
+ISR(TIMER0_COMP_vect) {
+ 660:	1f 92       	push	r1
+ 662:	0f 92       	push	r0
+ 664:	0f b6       	in	r0, 0x3f	; 63
+ 666:	0f 92       	push	r0
+ 668:	11 24       	eor	r1, r1
+ 66a:	8f 93       	push	r24
+ 66c:	9f 93       	push	r25
+	if (Timer1 > 0) Timer1--;
+ 66e:	80 91 b2 01 	lds	r24, 0x01B2	; 0x8001b2 <Timer1>
+ 672:	88 23       	and	r24, r24
+ 674:	29 f0       	breq	.+10     	; 0x680 <__vector_19+0x20>
+ 676:	80 91 b2 01 	lds	r24, 0x01B2	; 0x8001b2 <Timer1>
+ 67a:	81 50       	subi	r24, 0x01	; 1
+ 67c:	80 93 b2 01 	sts	0x01B2, r24	; 0x8001b2 <Timer1>
+	if (Timer2 > 0) Timer2--;
+ 680:	80 91 b0 01 	lds	r24, 0x01B0	; 0x8001b0 <__data_end>
+ 684:	90 91 b1 01 	lds	r25, 0x01B1	; 0x8001b1 <__data_end+0x1>
+ 688:	89 2b       	or	r24, r25
+ 68a:	49 f0       	breq	.+18     	; 0x69e <__vector_19+0x3e>
+ 68c:	80 91 b0 01 	lds	r24, 0x01B0	; 0x8001b0 <__data_end>
+ 690:	90 91 b1 01 	lds	r25, 0x01B1	; 0x8001b1 <__data_end+0x1>
+ 694:	01 97       	sbiw	r24, 0x01	; 1
+ 696:	90 93 b1 01 	sts	0x01B1, r25	; 0x8001b1 <__data_end+0x1>
+ 69a:	80 93 b0 01 	sts	0x01B0, r24	; 0x8001b0 <__data_end>
+}
+ 69e:	9f 91       	pop	r25
+ 6a0:	8f 91       	pop	r24
+ 6a2:	0f 90       	pop	r0
+ 6a4:	0f be       	out	0x3f, r0	; 63
+ 6a6:	0f 90       	pop	r0
+ 6a8:	1f 90       	pop	r1
+ 6aa:	18 95       	reti
+
+000006ac <_exit>:
+ 6ac:	f8 94       	cli
+
+000006ae <__stop_program>:
+ 6ae:	ff cf       	rjmp	.-2      	; 0x6ae <__stop_program>

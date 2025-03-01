@@ -1,0 +1,255 @@
+
+USART_RS232.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00000148  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         0000001a  00800060  00000148  000001bc  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .comment      00000030  00000000  00000000  000001d6  2**0
+                  CONTENTS, READONLY
+  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00000208  2**2
+                  CONTENTS, READONLY
+  4 .debug_aranges 00000040  00000000  00000000  00000244  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   0000075a  00000000  00000000  00000284  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 00000681  00000000  00000000  000009de  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   000002de  00000000  00000000  0000105f  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  00000070  00000000  00000000  00001340  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    000003cd  00000000  00000000  000013b0  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    00000102  00000000  00000000  0000177d  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 00000030  00000000  00000000  0000187f  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 2a 00 	jmp	0x54	; 0x54 <__ctors_end>
+   4:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+   8:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+   c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  10:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  14:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  18:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  1c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  20:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  24:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  28:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  2c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  30:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  34:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  38:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  3c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  40:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  44:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  48:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  4c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  50:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+
+00000054 <__ctors_end>:
+  54:	11 24       	eor	r1, r1
+  56:	1f be       	out	0x3f, r1	; 63
+  58:	cf e5       	ldi	r28, 0x5F	; 95
+  5a:	d4 e0       	ldi	r29, 0x04	; 4
+  5c:	de bf       	out	0x3e, r29	; 62
+  5e:	cd bf       	out	0x3d, r28	; 61
+
+00000060 <__do_copy_data>:
+  60:	10 e0       	ldi	r17, 0x00	; 0
+  62:	a0 e6       	ldi	r26, 0x60	; 96
+  64:	b0 e0       	ldi	r27, 0x00	; 0
+  66:	e8 e4       	ldi	r30, 0x48	; 72
+  68:	f1 e0       	ldi	r31, 0x01	; 1
+  6a:	02 c0       	rjmp	.+4      	; 0x70 <__do_copy_data+0x10>
+  6c:	05 90       	lpm	r0, Z+
+  6e:	0d 92       	st	X+, r0
+  70:	aa 37       	cpi	r26, 0x7A	; 122
+  72:	b1 07       	cpc	r27, r17
+  74:	d9 f7       	brne	.-10     	; 0x6c <__do_copy_data+0xc>
+  76:	0e 94 6a 00 	call	0xd4	; 0xd4 <main>
+  7a:	0c 94 a2 00 	jmp	0x144	; 0x144 <_exit>
+
+0000007e <__bad_interrupt>:
+  7e:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+00000082 <UART_Init>:
+#include <util/delay.h>
+
+// Function to initialize UART
+void UART_Init(unsigned int baud)
+{
+	unsigned int ubrr = F_CPU / 16 / baud - 1;
+  82:	9c 01       	movw	r18, r24
+  84:	40 e0       	ldi	r20, 0x00	; 0
+  86:	50 e0       	ldi	r21, 0x00	; 0
+  88:	60 e2       	ldi	r22, 0x20	; 32
+  8a:	71 ea       	ldi	r23, 0xA1	; 161
+  8c:	87 e0       	ldi	r24, 0x07	; 7
+  8e:	90 e0       	ldi	r25, 0x00	; 0
+  90:	0e 94 80 00 	call	0x100	; 0x100 <__udivmodsi4>
+  94:	21 50       	subi	r18, 0x01	; 1
+  96:	31 09       	sbc	r19, r1
+	UBRRH = (unsigned char)(ubrr >> 8);
+  98:	30 bd       	out	0x20, r19	; 32
+	UBRRL = (unsigned char)ubrr;
+  9a:	29 b9       	out	0x09, r18	; 9
+
+	UCSRB = (1 << RXEN) | (1 << TXEN);  // Enable receiver and transmitter
+  9c:	88 e1       	ldi	r24, 0x18	; 24
+  9e:	8a b9       	out	0x0a, r24	; 10
+	UCSRC = (1 << URSEL) | (1 << UCSZ1) | (1 << UCSZ0);  // 8-bit data, 1 stop bit, no parity
+  a0:	86 e8       	ldi	r24, 0x86	; 134
+  a2:	80 bd       	out	0x20, r24	; 32
+  a4:	08 95       	ret
+
+000000a6 <UART_Transmit>:
+}
+
+// Function to transmit data
+void UART_Transmit(char data)
+{
+	while (!(UCSRA & (1 << UDRE)));  // Wait until buffer is empty
+  a6:	5d 9b       	sbis	0x0b, 5	; 11
+  a8:	fe cf       	rjmp	.-4      	; 0xa6 <UART_Transmit>
+	UDR = data;  // Send data
+  aa:	8c b9       	out	0x0c, r24	; 12
+  ac:	08 95       	ret
+
+000000ae <UART_Receive>:
+}
+
+// Function to receive data
+char UART_Receive(void)
+{
+	while (!(UCSRA & (1 << RXC)));  // Wait until data is received
+  ae:	5f 9b       	sbis	0x0b, 7	; 11
+  b0:	fe cf       	rjmp	.-4      	; 0xae <UART_Receive>
+	return UDR;  // Return received data
+  b2:	8c b1       	in	r24, 0x0c	; 12
+}
+  b4:	08 95       	ret
+
+000000b6 <UART_TransmitString>:
+
+// Function to transmit a string
+void UART_TransmitString(char *str)
+{
+  b6:	cf 93       	push	r28
+  b8:	df 93       	push	r29
+  ba:	ec 01       	movw	r28, r24
+	while (*str)
+  bc:	88 81       	ld	r24, Y
+  be:	88 23       	and	r24, r24
+  c0:	31 f0       	breq	.+12     	; 0xce <UART_TransmitString+0x18>
+  c2:	21 96       	adiw	r28, 0x01	; 1
+	{
+		UART_Transmit(*str);
+  c4:	0e 94 53 00 	call	0xa6	; 0xa6 <UART_Transmit>
+}
+
+// Function to transmit a string
+void UART_TransmitString(char *str)
+{
+	while (*str)
+  c8:	89 91       	ld	r24, Y+
+  ca:	81 11       	cpse	r24, r1
+  cc:	fb cf       	rjmp	.-10     	; 0xc4 <UART_TransmitString+0xe>
+	{
+		UART_Transmit(*str);
+		str++;
+	}
+}
+  ce:	df 91       	pop	r29
+  d0:	cf 91       	pop	r28
+  d2:	08 95       	ret
+
+000000d4 <main>:
+
+int main(void)
+{
+	UART_Init(9600);  // Initialize UART with baud rate of 9600
+  d4:	80 e8       	ldi	r24, 0x80	; 128
+  d6:	95 e2       	ldi	r25, 0x25	; 37
+  d8:	0e 94 41 00 	call	0x82	; 0x82 <UART_Init>
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+  dc:	2f ef       	ldi	r18, 0xFF	; 255
+  de:	80 e7       	ldi	r24, 0x70	; 112
+  e0:	92 e0       	ldi	r25, 0x02	; 2
+  e2:	21 50       	subi	r18, 0x01	; 1
+  e4:	80 40       	sbci	r24, 0x00	; 0
+  e6:	90 40       	sbci	r25, 0x00	; 0
+  e8:	e1 f7       	brne	.-8      	; 0xe2 <main+0xe>
+  ea:	00 c0       	rjmp	.+0      	; 0xec <main+0x18>
+  ec:	00 00       	nop
+	_delay_ms(100);  // Short delay after initialization
+
+	UART_TransmitString("RS232 Test on ATmega16\r\n");
+  ee:	80 e6       	ldi	r24, 0x60	; 96
+  f0:	90 e0       	ldi	r25, 0x00	; 0
+  f2:	0e 94 5b 00 	call	0xb6	; 0xb6 <UART_TransmitString>
+
+	while (1)
+	{
+		char receivedChar = UART_Receive();  // Receive a character
+  f6:	0e 94 57 00 	call	0xae	; 0xae <UART_Receive>
+		UART_Transmit(receivedChar);  // Echo the received character
+  fa:	0e 94 53 00 	call	0xa6	; 0xa6 <UART_Transmit>
+  fe:	fb cf       	rjmp	.-10     	; 0xf6 <main+0x22>
+
+00000100 <__udivmodsi4>:
+ 100:	a1 e2       	ldi	r26, 0x21	; 33
+ 102:	1a 2e       	mov	r1, r26
+ 104:	aa 1b       	sub	r26, r26
+ 106:	bb 1b       	sub	r27, r27
+ 108:	fd 01       	movw	r30, r26
+ 10a:	0d c0       	rjmp	.+26     	; 0x126 <__udivmodsi4_ep>
+
+0000010c <__udivmodsi4_loop>:
+ 10c:	aa 1f       	adc	r26, r26
+ 10e:	bb 1f       	adc	r27, r27
+ 110:	ee 1f       	adc	r30, r30
+ 112:	ff 1f       	adc	r31, r31
+ 114:	a2 17       	cp	r26, r18
+ 116:	b3 07       	cpc	r27, r19
+ 118:	e4 07       	cpc	r30, r20
+ 11a:	f5 07       	cpc	r31, r21
+ 11c:	20 f0       	brcs	.+8      	; 0x126 <__udivmodsi4_ep>
+ 11e:	a2 1b       	sub	r26, r18
+ 120:	b3 0b       	sbc	r27, r19
+ 122:	e4 0b       	sbc	r30, r20
+ 124:	f5 0b       	sbc	r31, r21
+
+00000126 <__udivmodsi4_ep>:
+ 126:	66 1f       	adc	r22, r22
+ 128:	77 1f       	adc	r23, r23
+ 12a:	88 1f       	adc	r24, r24
+ 12c:	99 1f       	adc	r25, r25
+ 12e:	1a 94       	dec	r1
+ 130:	69 f7       	brne	.-38     	; 0x10c <__udivmodsi4_loop>
+ 132:	60 95       	com	r22
+ 134:	70 95       	com	r23
+ 136:	80 95       	com	r24
+ 138:	90 95       	com	r25
+ 13a:	9b 01       	movw	r18, r22
+ 13c:	ac 01       	movw	r20, r24
+ 13e:	bd 01       	movw	r22, r26
+ 140:	cf 01       	movw	r24, r30
+ 142:	08 95       	ret
+
+00000144 <_exit>:
+ 144:	f8 94       	cli
+
+00000146 <__stop_program>:
+ 146:	ff cf       	rjmp	.-2      	; 0x146 <__stop_program>

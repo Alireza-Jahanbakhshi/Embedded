@@ -1,0 +1,240 @@
+
+TIM_PWM_L298.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         0000011c  00000000  00000000  00000054  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000000  00800060  00800060  00000170  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .comment      00000030  00000000  00000000  00000170  2**0
+                  CONTENTS, READONLY
+  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  000001a0  2**2
+                  CONTENTS, READONLY
+  4 .debug_aranges 00000038  00000000  00000000  000001dc  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   000007f5  00000000  00000000  00000214  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 0000066d  00000000  00000000  00000a09  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   00000319  00000000  00000000  00001076  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  00000054  00000000  00000000  00001390  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    000003b0  00000000  00000000  000013e4  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    00000123  00000000  00000000  00001794  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 00000058  00000000  00000000  000018b7  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 2a 00 	jmp	0x54	; 0x54 <__ctors_end>
+   4:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+   8:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+   c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  10:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  14:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  18:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  1c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  20:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  24:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  28:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  2c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  30:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  34:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  38:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  3c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  40:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  44:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  48:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  4c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  50:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+
+00000054 <__ctors_end>:
+  54:	11 24       	eor	r1, r1
+  56:	1f be       	out	0x3f, r1	; 63
+  58:	cf e5       	ldi	r28, 0x5F	; 95
+  5a:	d4 e0       	ldi	r29, 0x04	; 4
+  5c:	de bf       	out	0x3e, r29	; 62
+  5e:	cd bf       	out	0x3d, r28	; 61
+  60:	0e 94 4e 00 	call	0x9c	; 0x9c <main>
+  64:	0c 94 8c 00 	jmp	0x118	; 0x118 <_exit>
+
+00000068 <__bad_interrupt>:
+  68:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+0000006c <setMotorDirection>:
+	OCR1A = speed; // Set PWM duty cycle
+}
+
+// Function to set motor direction
+void setMotorDirection(uint8_t dir) {
+	if (dir == 1) {  // Forward
+  6c:	81 30       	cpi	r24, 0x01	; 1
+  6e:	19 f4       	brne	.+6      	; 0x76 <setMotorDirection+0xa>
+		PORTD |= (1 << PD0);
+  70:	90 9a       	sbi	0x12, 0	; 18
+		PORTD &= ~(1 << PD1);
+  72:	91 98       	cbi	0x12, 1	; 18
+  74:	08 95       	ret
+		} else if (dir == 2) {  // Reverse
+  76:	82 30       	cpi	r24, 0x02	; 2
+  78:	19 f4       	brne	.+6      	; 0x80 <setMotorDirection+0x14>
+		PORTD |= (1 << PD1);
+  7a:	91 9a       	sbi	0x12, 1	; 18
+		PORTD &= ~(1 << PD0);
+  7c:	90 98       	cbi	0x12, 0	; 18
+  7e:	08 95       	ret
+		} else {  // Stop
+		PORTD &= ~((1 << PD0) | (1 << PD1));
+  80:	82 b3       	in	r24, 0x12	; 18
+  82:	8c 7f       	andi	r24, 0xFC	; 252
+  84:	82 bb       	out	0x12, r24	; 18
+  86:	08 95       	ret
+
+00000088 <pwmInit>:
+}
+
+// Timer1 PWM Initialization (Fast PWM Mode)
+void pwmInit() {
+	// Set PB1 (OC1A) as output
+	DDRB |= (1 << PB1);
+  88:	b9 9a       	sbi	0x17, 1	; 23
+
+	// Fast PWM Mode, Non-Inverting, Prescaler 64
+	TCCR1A = (1 << COM1A1) | (1 << WGM11);
+  8a:	82 e8       	ldi	r24, 0x82	; 130
+  8c:	8f bd       	out	0x2f, r24	; 47
+	TCCR1B = (1 << WGM12) | (1 << WGM13) | (1 << CS11) | (1 << CS10);
+  8e:	8b e1       	ldi	r24, 0x1B	; 27
+  90:	8e bd       	out	0x2e, r24	; 46
+	
+	// Set TOP value for 8-bit resolution
+	ICR1 = 255;
+  92:	8f ef       	ldi	r24, 0xFF	; 255
+  94:	90 e0       	ldi	r25, 0x00	; 0
+  96:	97 bd       	out	0x27, r25	; 39
+  98:	86 bd       	out	0x26, r24	; 38
+  9a:	08 95       	ret
+
+0000009c <main>:
+}
+
+int main(void) {
+	// Set PD0 & PD1 as output for direction control
+	DDRD |= (1 << PD0) | (1 << PD1);
+  9c:	81 b3       	in	r24, 0x11	; 17
+  9e:	83 60       	ori	r24, 0x03	; 3
+  a0:	81 bb       	out	0x11, r24	; 17
+	
+	// Initialize PWM
+	pwmInit();
+  a2:	0e 94 44 00 	call	0x88	; 0x88 <pwmInit>
+#include <avr/io.h>
+#include <util/delay.h>
+
+// Function to set motor speed using PWM (0-255)
+void setMotorSpeed(uint8_t speed) {
+	OCR1A = speed; // Set PWM duty cycle
+  a6:	02 eb       	ldi	r16, 0xB2	; 178
+  a8:	10 e0       	ldi	r17, 0x00	; 0
+  aa:	cf e7       	ldi	r28, 0x7F	; 127
+  ac:	d0 e0       	ldi	r29, 0x00	; 0
+	// Initialize PWM
+	pwmInit();
+	
+	while (1) {
+		// Forward at 70% speed
+		setMotorDirection(1);
+  ae:	81 e0       	ldi	r24, 0x01	; 1
+  b0:	0e 94 36 00 	call	0x6c	; 0x6c <setMotorDirection>
+#include <avr/io.h>
+#include <util/delay.h>
+
+// Function to set motor speed using PWM (0-255)
+void setMotorSpeed(uint8_t speed) {
+	OCR1A = speed; // Set PWM duty cycle
+  b4:	1b bd       	out	0x2b, r17	; 43
+  b6:	0a bd       	out	0x2a, r16	; 42
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+  b8:	2f ef       	ldi	r18, 0xFF	; 255
+  ba:	83 ed       	ldi	r24, 0xD3	; 211
+  bc:	90 e3       	ldi	r25, 0x30	; 48
+  be:	21 50       	subi	r18, 0x01	; 1
+  c0:	80 40       	sbci	r24, 0x00	; 0
+  c2:	90 40       	sbci	r25, 0x00	; 0
+  c4:	e1 f7       	brne	.-8      	; 0xbe <main+0x22>
+  c6:	00 c0       	rjmp	.+0      	; 0xc8 <main+0x2c>
+  c8:	00 00       	nop
+		setMotorDirection(1);
+		setMotorSpeed(178);  // 70% of 255
+		_delay_ms(2000);
+
+		// Stop for 1 sec
+		setMotorDirection(0);
+  ca:	80 e0       	ldi	r24, 0x00	; 0
+  cc:	0e 94 36 00 	call	0x6c	; 0x6c <setMotorDirection>
+  d0:	2f ef       	ldi	r18, 0xFF	; 255
+  d2:	89 e6       	ldi	r24, 0x69	; 105
+  d4:	98 e1       	ldi	r25, 0x18	; 24
+  d6:	21 50       	subi	r18, 0x01	; 1
+  d8:	80 40       	sbci	r24, 0x00	; 0
+  da:	90 40       	sbci	r25, 0x00	; 0
+  dc:	e1 f7       	brne	.-8      	; 0xd6 <main+0x3a>
+  de:	00 c0       	rjmp	.+0      	; 0xe0 <main+0x44>
+  e0:	00 00       	nop
+		_delay_ms(1000);
+		
+		// Reverse at 50% speed
+		setMotorDirection(2);
+  e2:	82 e0       	ldi	r24, 0x02	; 2
+  e4:	0e 94 36 00 	call	0x6c	; 0x6c <setMotorDirection>
+#include <avr/io.h>
+#include <util/delay.h>
+
+// Function to set motor speed using PWM (0-255)
+void setMotorSpeed(uint8_t speed) {
+	OCR1A = speed; // Set PWM duty cycle
+  e8:	db bd       	out	0x2b, r29	; 43
+  ea:	ca bd       	out	0x2a, r28	; 42
+  ec:	2f ef       	ldi	r18, 0xFF	; 255
+  ee:	83 ed       	ldi	r24, 0xD3	; 211
+  f0:	90 e3       	ldi	r25, 0x30	; 48
+  f2:	21 50       	subi	r18, 0x01	; 1
+  f4:	80 40       	sbci	r24, 0x00	; 0
+  f6:	90 40       	sbci	r25, 0x00	; 0
+  f8:	e1 f7       	brne	.-8      	; 0xf2 <main+0x56>
+  fa:	00 c0       	rjmp	.+0      	; 0xfc <main+0x60>
+  fc:	00 00       	nop
+		setMotorDirection(2);
+		setMotorSpeed(127);  // 50% of 255
+		_delay_ms(2000);
+		
+		// Stop for 1 sec
+		setMotorDirection(0);
+  fe:	80 e0       	ldi	r24, 0x00	; 0
+ 100:	0e 94 36 00 	call	0x6c	; 0x6c <setMotorDirection>
+ 104:	2f ef       	ldi	r18, 0xFF	; 255
+ 106:	89 e6       	ldi	r24, 0x69	; 105
+ 108:	98 e1       	ldi	r25, 0x18	; 24
+ 10a:	21 50       	subi	r18, 0x01	; 1
+ 10c:	80 40       	sbci	r24, 0x00	; 0
+ 10e:	90 40       	sbci	r25, 0x00	; 0
+ 110:	e1 f7       	brne	.-8      	; 0x10a <main+0x6e>
+ 112:	00 c0       	rjmp	.+0      	; 0x114 <main+0x78>
+ 114:	00 00       	nop
+ 116:	cb cf       	rjmp	.-106    	; 0xae <main+0x12>
+
+00000118 <_exit>:
+ 118:	f8 94       	cli
+
+0000011a <__stop_program>:
+ 11a:	ff cf       	rjmp	.-2      	; 0x11a <__stop_program>
