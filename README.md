@@ -14,25 +14,39 @@ This repository serves as a **comprehensive reference** for developers, students
 ✅ Planned support for **STM32, ESP32, PIC, and ARM Cortex-M**  
 ✅ Open-source under the **MIT License**
 
+## 📚 New Content: C Programming Tutorial
+
+We've added a comprehensive **C Programming Tutorial** to help beginners and intermediate developers master the language. This tutorial includes:
+
+- Core concepts of C (variables, data types, operators, control structures)
+- Functions, pointers, and memory management
+- File handling and standard libraries
+- Modular programming with **library creation**
+- All examples formatted using **K&R (Kernighan and Ritchie) style**
+
+👉 Check out `C.md` for the full tutorial!
+
 ## Repository Structure
 
 ```
 Embedded/
+├── C.md                                # 📘 C Programming Tutorial (with K&R style)
 └── MicrochipTechnology/
     └── AVR_FW_ATmega_V1.0.0/
         └── ATmega16APU_DevBoard/
-            ├── Examples/
-            │   ├── ADC/ (Analog to Digital Converter examples)
-            │   ├── EXTI/ (External Interrupts)
-            │   ├── GPIO/ (General Purpose Input/Output examples)
-            │   ├── I2C/ (Inter-Integrated Circuit examples)
-            │   ├── RTC/ (Real-Time Clock examples)
-            │   ├── SPI/ (Serial Peripheral Interface examples)
-            │   ├── TIM/ (Timer examples)
-            │   ├── UART/ (Universal Asynchronous Receiver-Transmitter examples)
-            │   └── WDT/ (Watchdog Timer examples)
+            ├── Examples/               # Peripheral driver examples
+            │   ├── ADC/                # Analog-to-Digital Converter
+            │   ├── EXTI/               # External Interrupts
+            │   ├── GPIO/               # General Purpose I/O
+            │   ├── I2C/                # Inter-Integrated Circuit
+            │   ├── RTC/                # Real-Time Clock
+            │   ├── SPI/                # Serial Peripheral Interface
+            │   ├── TIM/                # Timers
+            │   ├── UART/               # Serial Communication (UART)
+            │   └── WDT/                # Watchdog Timer
             └── Templates/
-                └── Project/
+                └── Project/           # Project base template
+
 ```
 
 Each peripheral directory contains **multiple subdirectories** for different firmware implementations, typically with a `Debug` folder containing compiled/debugging outputs.

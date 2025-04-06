@@ -1,19 +1,19 @@
 /*
-* GPIO_InputKeys.c
-*
-* Created: 2/26/2025 12:14:59 AM
-* Author : PA
-*/
+ * GPIO_InputKeys.c
+ *
+ * Created: 2/26/2025 12:14:59 AM
+ * Author : PA
+ */
 
-#define F_CPU 8000000UL
+#define F_CPU 8000000UL // 8 MHz clock
 
 #include <avr/io.h>
 #include <util/delay.h>
 
 int main(void)
 {
-	DDRB = 0b00000111; // Set PORTB0, PORTB1, PORTB2 as output
-	DDRA = 0b00000000; // Set PORTA0, PORTA1, PORTA2 as input
+	DDRB = 0b00000111;	// Set PORTB0, PORTB1, PORTB2 as output
+	DDRA = 0b00000000;	// Set PORTA0, PORTA1, PORTA2 as input
 	PORTA = 0b00000111; // Enable pull-up resistors on PORTA0, PORTA1, PORTA2
 	PORTB = 0b00000000; // Initialize PORTB to 0 (LEDs off)
 

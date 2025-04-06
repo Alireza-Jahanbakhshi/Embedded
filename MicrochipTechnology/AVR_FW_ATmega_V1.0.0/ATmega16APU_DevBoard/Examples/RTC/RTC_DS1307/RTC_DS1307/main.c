@@ -1,21 +1,8 @@
 /*
- * RTC_DS1307.c
- *
- * Created: 2/28/2025 2:49:41 PM
- * Author : PA
- */ 
-
-
-/*
  * RTC_with_UART.c
+ *
  * Created: 2/28/2025
- * Author: PA (adapted with Grok 3 assistance)
- */
-
-/*
- * rtc_with_uart.c
- * Created: 2/28/2025
- * Author: PA (adapted with Grok 3 assistance)
+ * Author: PA
  */
 
 #define F_CPU 8000000UL // Define CPU frequency as 8 MHz
@@ -40,7 +27,7 @@ typedef struct
 } rtc_t;
 
 // DS1307 I2C definitions
-#define C_DS1307_READ_MODE_U8  0xD1u
+#define C_DS1307_READ_MODE_U8 0xD1u
 #define C_DS1307_WRITE_MODE_U8 0xD0u
 #define C_DS1307_SECOND_REG_ADDRESS_U8 0x00u
 #define C_DS1307_CONTROL_REG_ADDRESS_U8 0x07u
@@ -48,8 +35,9 @@ typedef struct
 // UART transmit function for printf
 int uart_transmit(char data, FILE *stream)
 {
-    while (!(UCSRA & (1 << UDRE))); // Wait for transmit buffer to be empty
-    UDR = data;                     // Send character
+    while (!(UCSRA & (1 << UDRE)))
+        ;       // Wait for transmit buffer to be empty
+    UDR = data; // Send character
     return 0;
 }
 
@@ -59,15 +47,16 @@ static FILE uart_stream = FDEV_SETUP_STREAM(uart_transmit, NULL, _FDEV_SETUP_WRI
 // I2C functions
 void i2c_init()
 {
-    TWSR = 0x00; // Prescaler = 1
-    TWBR = 0x48; // SCL = 50 kHz at 8 MHz (TWBR = 72)
+    TWSR = 0x00;        // Prescaler = 1
+    TWBR = 0x48;        // SCL = 50 kHz at 8 MHz (TWBR = 72)
     TWCR = (1 << TWEN); // Enable TWI
 }
 
 void i2c_start()
 {
     TWCR = (1 << TWINT) | (1 << TWSTA) | (1 << TWEN);
-    while (!(TWCR & (1 << TWINT)));
+    while (!(TWCR & (1 << TWINT)))
+        ;
 }
 
 void i2c_stop()
@@ -80,13 +69,15 @@ void i2c_write(uint8_t i2c_data_u8)
 {
     TWDR = i2c_data_u8;
     TWCR = (1 << TWINT) | (1 << TWEN);
-    while (!(TWCR & (1 << TWINT)));
+    while (!(TWCR & (1 << TWINT)))
+        ;
 }
 
 uint8_t i2c_read(uint8_t ack_option_u8)
 {
     TWCR = (1 << TWINT) | (1 << TWEN) | (ack_option_u8 << TWEA);
-    while (!(TWCR & (1 << TWINT)));
+    while (!(TWCR & (1 << TWINT)))
+        ;
     return TWDR;
 }
 
@@ -140,10 +131,10 @@ int main()
     rtc_t rtc;
 
     // UART initialization (9600 baud, 8N1)
-    UBRRH = (uint8_t)(BAUD_PRESCALER >> 8);  // Baud rate high byte
-    UBRRL = (uint8_t)(BAUD_PRESCALER);       // Baud rate low byte
-    UCSRA = 0x00;                            // No double speed
-    UCSRB = (1 << TXEN);                     // Enable transmitter
+    UBRRH = (uint8_t)(BAUD_PRESCALER >> 8);             // Baud rate high byte
+    UBRRL = (uint8_t)(BAUD_PRESCALER);                  // Baud rate low byte
+    UCSRA = 0x00;                                       // No double speed
+    UCSRB = (1 << TXEN);                                // Enable transmitter
     UCSRC = (1 << URSEL) | (1 << UCSZ1) | (1 << UCSZ0); // 8-bit, 1 stop, no parity
 
     // Redirect stdout to UART
@@ -153,12 +144,12 @@ int main()
     rtc_init();
 
     // Set initial time and date (2:49:41 PM, 28 Feb 2025, Friday)
-    rtc.hour = 0x2;    // 2 hours (BCD)
-    rtc.min = 0x49;     // 40 minutes (BCD)
-    rtc.sec = 0x41;     // 00 seconds (BCD)
-    rtc.date = 0x01;    // 28 (BCD)
-    rtc.month = 0x02;   // Feb (BCD)
-    rtc.year = 0x25;    // 202025 (BCD)
+    rtc.hour = 0x2;      // 2 hours (BCD)
+    rtc.min = 0x49;      // 40 minutes (BCD)
+    rtc.sec = 0x41;      // 00 seconds (BCD)
+    rtc.date = 0x01;     // 28 (BCD)
+    rtc.month = 0x02;    // Feb (BCD)
+    rtc.year = 0x25;     // 202025 (BCD)
     rtc.week_day = 0x05; // Friday (1 = Mon, 5 = Fri)
 
     rtc_set_date_time(&rtc); // Set time once, then comment out

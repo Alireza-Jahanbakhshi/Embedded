@@ -1,13 +1,14 @@
 /*
-* GPIO_IOToggle.c
-*
-* Created: 2/26/2025 12:02:04 AM
-* Author : PA
-*/
+ * GPIO_IOToggle.c
+ *
+ * Created: 2/26/2025 12:02:04 AM
+ * Author : PA
+ */
 
-#define F_CPU 8000000UL  // Define clock frequency (adjust to your setup)
-#include <avr/io.h>      // Standard AVR I/O header
-#include <util/delay.h>  // AVR delay library
+#define F_CPU 8000000UL // 8 MHz clock
+
+#include <avr/io.h>		// Standard AVR I/O header
+#include <util/delay.h> // AVR delay library
 
 int main(void)
 {
@@ -30,14 +31,14 @@ int main(void)
 		PORTB = 0x00;
 		PORTC = 0x00;
 		PORTD = 0x00;
-		_delay_ms(1000);        // Wait 1 second
+		_delay_ms(1000); // Wait 1 second
 
 		PORTA = 0xFF;
 		PORTB = 0xFF;
 		PORTC = 0xFF;
 		PORTD = 0xFF;
-		_delay_ms(1000);        // Wait 1 second
+		_delay_ms(1000); // Wait 1 second
 	}
 
-	return 0;  // Never reached due to infinite loop
+	return 0; // Never reached due to infinite loop
 }
